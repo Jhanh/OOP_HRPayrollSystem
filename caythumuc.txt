@@ -1,0 +1,54 @@
+OOP_HRPayrollSystem/
+├── .vscode/
+│   └── settings.json
+├── README.md
+├── docs/
+│   ├── screenshots/
+│   ├── UML_ClassDiagram.drawio
+│   └── UML_ClassDiagram.png
+├── lib/
+│   ├── flatlaf.jar
+│   └── jfreechart-1.5.x.jar
+├── resources/
+│   └── icons/
+│       ├── add.png
+│       ├── app.png
+│       ├── chart.png
+│       ├── edit.png
+│       ├── export.png
+│       └── delete.png
+└── src/
+    └── vn/edu/ptit/oop/nhom08/
+        ├── Main.java
+        ├── common/
+        │   └── BaseWindow.java
+        ├── exception/
+        │   └── InvalidEmployeeDataException.java
+        ├── model/
+        │   ├── Employee.java
+        │   ├── FullTimeEmployee.java
+        │   ├── Intern.java
+        │   ├── Manager.java
+        │   ├── PartTimeEmployee.java
+        │   ├── TaxCalculator.java
+        │   └── Taxable.java
+        ├── repository/
+        │   ├── EmployeeRepository.java
+        │   └── InMemoryEmployeeRepository.java
+        ├── service/
+        │   └── PayrollService.java
+        ├── ui/
+        │   ├── MainWindow.java
+        │   ├── dialogs/
+        │   │   ├── AboutDialog.java
+        │   │   └── EmployeeFormDialog.java
+        │   └── panels/
+        │       ├── EmployeeTableModel.java
+        │       ├── PayrollCellRenderer.java
+        │       └── PayrollTableModel.java
+        └── util/
+            ├── CurrencyFormatUtil.java
+            ├── ChartHelper.java
+            ├── ChartWindow.java
+            ├── EmployeeComparator.java
+            └── PayslipExporter.java
