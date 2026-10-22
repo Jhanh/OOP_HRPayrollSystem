@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Chạy HR Payroll System (Main)",
+            "request": "launch",
+            "mainClass": "vn.edu.ptit.oop.nhom08.Main",
+            "projectName": "OOP_Nhom08_HRPayrollSystem",
+            "vmArgs": "-Dfile.encoding=UTF-8",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
+

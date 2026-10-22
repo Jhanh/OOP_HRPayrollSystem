@@ -1,0 +1,32 @@
+{
+    // Auto-save & File configurations
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "files.autoSaveWhenNoErrors": false,
+    "files.autoSaveWorkspaceFilesOnly": false,
+    "files.encoding": "utf8",
+
+    // Editor formatting & UX
+    "editor.mouseWheelZoom": true,
+    "editor.wordWrap": "on",
+    "editor.cursorBlinking": "phase",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.cursorStyle": "line",
+
+    // Terminal
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.smoothScrolling": true,
+
+    // Java Project Configuration
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/*.jar"
+    ],
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.jdt.ls.vmargs": "-Dfile.encoding=UTF-8"
+}
