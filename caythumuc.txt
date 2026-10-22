@@ -1,4 +1,4 @@
-OOP_HRPayrollSystem/
+OOP_Nhom08_HRPayrollSystem/
 ├── .vscode/
 │   └── settings.json
 ├── README.md
