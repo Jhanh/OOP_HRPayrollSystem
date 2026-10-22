@@ -1,31 +1,30 @@
-# OOP_Nhom08_HRPayrollSystem - Hệ Thống Quản Lý Nhân Sự & Bảng Lương
+# HR Payroll System - Quản Lý Nhân Sự & Bảng Lương
 
-> **BÀI TẬP LỚN MÔN LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG (INT1332)**  
+> **MÔN LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG (INT1332)**  
 > **HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG (PTIT)**  
-> **Nhóm thực hiện:** Nhóm 08 (Gồm 10 thành viên)  
-> **Chủ đề lựa chọn (Đề số 02):** Quản lý Nhân sự & Bảng lương (*HR Payroll System*)  
+> **Nhóm thực hiện:** Nhóm 08 
+> **Chủ đề:** Quản lý Nhân sự & Bảng lương (*HR Payroll System*)  
 > **Công nghệ sử dụng:** Java SE 17+ (LTS) | Java Swing GUI | JFreeChart 1.5.4 | FlatLaf 3.6.2  
 
 ---
 
 ## 📑 MỤC LỤC
-1. [Giới thiệu tổng quan & Định hướng dự án](#1-giới-thiệu-tổng-quan--định-hướng-dự-án)
+1. [Giới thiệu tổng quan](#1-giới-thiệu-tổng-quan)
 2. [Yêu cầu môi trường & Hướng dẫn thiết lập](#2-yêu-cầu-môi-trường--hướng-dẫn-thiết-lập)
-3. [Cấu trúc dự án & Chi tiết 24 File `.java` chuẩn mực](#3-cấu-trúc-dự-án--chi-tiết-24-file-java-chuẩn-mực)
+3. [Cấu trúc dự án](#3-cấu-trúc-dự-án)
 4. [Ánh xạ 4 Nguyên lý OOP cốt lõi vào mã nguồn](#4-ánh-xạ-4-nguyên-lý-oop-cốt-lõi-vào-mã-nguồn)
 5. [Quy tắc nghiệp vụ tính Lương & Bảng tính Thuế TNCN](#5-quy-tắc-nghiệp-vụ-tính-lương--bảng-tính-thuế-tncn)
-6. [Lưu ý kỹ thuật sống còn (Trọng tâm phản biện)](#6-lưu-ý-kỹ-thuật-sống-còn-trọng-tâm-phản-biện)
-7. [Bảng phân công nhiệm vụ cho 10 thành viên](#7-bảng-phân-công-nhiệm-vụ-cho-10-thành-viên)
-8. [Bảng kiểm thử mẫu (Test Cases)](#8-bảng-kiểm-thử-mẫu-test-cases)
-9. [Quy chuẩn nộp sản phẩm & Quản trị Git](#9-quy-chuẩn-nộp-sản-phẩm--quản-trị-git)
+6. [Lưu ý kỹ thuật](#6-lưu-ý-kỹ-thuật)
+7. [Bảng phân công nhiệm vụ](#7-bảng-phân-công-nhiệm-vụ)
+<!-- 8. [Bảng kiểm thử mẫu (Test Cases)](#8-bảng-kiểm-thử-mẫu-test-cases) -->
 
 ---
 
-## 1. Giới thiệu tổng quan & Định hướng dự án
+## 1. Giới thiệu tổng quan
 
 Hệ thống **Quản lý Nhân sự & Bảng lương (HR Payroll System)** phục vụ quản trị toàn diện thông tin nhân sự với đa dạng các loại hợp đồng lao động: *Nhân viên toàn thời gian (Full-time)*, *Nhân viên bán thời gian (Part-time)*, *Thực tập sinh (Intern)*, và *Trưởng phòng/Quản lý (Manager)*. Hệ thống tự động hóa:
 * Tính toán chi tiết tiền lương, các khoản phụ cấp trách nhiệm, hệ số thưởng và trợ cấp.
-* Tính thuế thu nhập cá nhân (TNCN) theo biểu lũy tiến từng phần minh bạch.
+* Tính thuế thu nhập cá nhân theo biểu lũy tiến từng phần minh bạch.
 * Thống kê và trực quan hóa phân bổ quỹ lương theo phòng ban cùng cơ cấu nhân sự bằng biểu đồ **JFreeChart**.
 * Xuất phiếu lương cá nhân chuyên nghiệp (định dạng HTML/TXT) và hỗ trợ sắp xếp bảng dữ liệu đa tiêu chí linh hoạt.
 ---
@@ -35,7 +34,7 @@ Hệ thống **Quản lý Nhân sự & Bảng lương (HR Payroll System)** ph�
 ### 2.1 Môi trường yêu cầu
 * **JDK:** Java Development Kit từ phiên bản 17 LTS trở lên (tương thích hoàn hảo với Java 17, Java 21, Java 25).
 * **IDE hỗ trợ:** Eclipse IDE, Visual Studio Code (Java Extension Pack), hoặc IntelliJ IDEA.
-* **Thư viện bên ngoài (Đặt sẵn trong thư mục `lib/`):**
+* **Thư viện bên ngoài:**
   * `lib/jfreechart-1.5.4.jar`: Thư viện vẽ biểu đồ phân tích thống kê (BarChart & PieChart).
   * `lib/flatlaf-3.6.2.jar`: Look and Feel hiện đại, tối ưu giao diện phẳng và hiển thị High-DPI.
 
@@ -74,7 +73,7 @@ java -cp "bin;lib/*" vn.edu.ptit.oop.nhom08.Main
 
 ---
 
-## 3. Cấu trúc dự án & Chi tiết 24 File `.java` chuẩn mực
+## 3. Cấu trúc dự án
 
 Dự án được nhóm thiết kế tinh gọn, bám sát kiến trúc phân tầng (Layered Architecture) với đúng **24 file `.java`**, bảo đảm tính rõ ràng, tách bạch trách nhiệm:
 
@@ -108,16 +107,16 @@ OOP_Nhom08_HRPayrollSystem/
         ├── exception/
         │   └── InvalidEmployeeDataException.java # [File 03] Ngoại lệ kiểm tra dữ liệu nhập liệu
         ├── model/
-        │   ├── Employee.java           # [File 04] Lớp trừu tượng cha chứa thông tin nhân sự cốt lõi
-        │   ├── FullTimeEmployee.java   # [File 05] Lớp con: Nhân viên toàn thời gian (implements Taxable)
-        │   ├── Intern.java             # [File 06] Lớp con: Thực tập sinh (Không implement Taxable)
+        │   ├── Employee.java           # [File 04] Lớp trừu tượng cha chứa thông tin nhân sự
+        │   ├── FullTimeEmployee.java   # [File 05] Lớp con: Nhân viên toàn thời gian
+        │   ├── Intern.java             # [File 06] Lớp con: Thực tập sinh
         │   ├── Manager.java            # [File 07] Lớp con kế thừa 2 tầng từ FullTimeEmployee
-        │   ├── PartTimeEmployee.java   # [File 08] Lớp con: Nhân viên bán thời gian (tính theo giờ)
+        │   ├── PartTimeEmployee.java   # [File 08] Lớp con: Nhân viên bán thời gian
         │   ├── TaxCalculator.java      # [File 09] Lớp nghiệp vụ tính toán thuế TNCN theo bậc lũy tiến
         │   └── Taxable.java            # [File 10] Interface định nghĩa hành vi tính thuế
         ├── repository/
         │   ├── EmployeeRepository.java # [File 11] Interface tầng lưu trữ (CRUD nhân sự)
-        │   └── InMemoryEmployeeRepository.java # [File 12] Cài đặt lưu trữ bộ nhớ sẵn >= 15 nhân viên mẫu
+        │   └── InMemoryEmployeeRepository.java # [File 12] Lưu trữ sẵn hơn 15 nhân viên mẫu
         ├── service/
         │   └── PayrollService.java     # [File 13] Dịch vụ tính toán quỹ lương, gom nhóm theo phòng ban
         ├── ui/
@@ -155,14 +154,14 @@ OOP_Nhom08_HRPayrollSystem/
 ## 5. Quy tắc nghiệp vụ tính Lương & Bảng tính Thuế TNCN
 
 ### 5.1 Công thức tính tiền lương theo loại hợp đồng
-1. **Nhân viên toàn thời gian (`FullTimeEmployee`):**
-   $$\text{Lương} = (\text{Lương cơ bản} \times \text{Hệ số thưởng}) + \text{Phụ cấp}$$
-2. **Trưởng phòng / Quản lý (`Manager` - kế thừa `FullTimeEmployee`):**
-   $$\text{Lương Manager} = \text{super.calculateSalary()} + (\text{Số người quản lý} \times 500.000\,\text{VNĐ})$$
-3. **Nhân viên bán thời gian (`PartTimeEmployee`):**
-   $$\text{Lương} = \text{Lương theo giờ} \times \text{Số giờ làm việc thực tế}$$
-4. **Thực tập sinh (`Intern`):**
-   $$\text{Lương} = \text{Mức trợ cấp cố định}$$
+1. Nhân viên toàn thời gian (`FullTimeEmployee`):<br>
+   &emsp; $$\text{Lương} = (\text{Lương cơ bản} \times \text{Hệ số thưởng}) + \text{Phụ cấp}$$
+2. Trưởng phòng / Quản lý (`Manager` - kế thừa `FullTimeEmployee`):<br>
+   &emsp; $$\text{Lương Manager} = \text{super.calculateSalary()} + (\text{Số người quản lý} \times 500.000\,\text{VNĐ})$$
+3. Nhân viên bán thời gian (`PartTimeEmployee`):<br>
+   &emsp; $$\text{Lương} = \text{Lương theo giờ} \times \text{Số giờ làm việc thực tế}$$
+4. Thực tập sinh (`Intern`):<br>
+   &emsp; $$\text{Lương} = \text{Mức trợ cấp cố định}$$
 
 ---
 
@@ -178,8 +177,8 @@ OOP_Nhom08_HRPayrollSystem/
 | **Bậc 3** | Trên $20.000.000$ đến $40.000.000$ VNĐ | **10%** | Tối đa $2.000.000$ VNĐ |
 | **Bậc 4** | Trên $40.000.000$ VNĐ | **20%** | $20\%$ cho phần vượt trên $40.000.000$ VNĐ |
 
-* **Công thức Thực lĩnh (Net Salary):**
-  $$\text{Thực lĩnh} = \text{Tổng lương} - \text{Thuế TNCN}$$
+* Công thức Thực lĩnh (Net Salary):<br>
+  &emsp; $$\text{Thực lĩnh} = \text{Tổng lương} - \text{Thuế TNCN}$$
 
 ---
 
@@ -216,25 +215,23 @@ OOP_Nhom08_HRPayrollSystem/
 
 ---
 
-## 7. Bảng phân công nhiệm vụ cho 10 thành viên
+## 7. Bảng phân công nhiệm vụ
 
-Bảng phân công công việc được chuẩn hóa theo đúng kiến trúc mô đun của hệ thống, bảo đảm tính gắn kết cao giữa các lớp và phân định rõ trách nhiệm cho từng thành viên:
-
-|  STT  |    MSSV    |       Họ và tên        |                        Vai trò                        |                                Các lớp Java phụ trách                                |
-| :---: | :--------: | :--------------------: | :---------------------------------------------------: | :----------------------------------------------------------------------------------: |
-| **1** | N24DCAT040 |  *Nguyễn Quốc Khánh*   |   Quản trị dự án, Điều phối Git & Khung sườn chính    |         `Main.java`, `BaseWindow.java`, `MainWindow.java`, `AboutDialog.java`        |
-| **2** | N24DCAT063 |   *Trần Vinh Quang*    |    Lớp trừu tượng cha & Ngoại lệ xác thực nghiệp vụ   |                 `Employee.java`, `InvalidEmployeeDataException.java`                 |
-| **3** | N24DCAT059 | *Nguyễn Vũ Hoàng Phúc* |        Các mô hình hợp đồng lao động trực tiếp        |            `FullTimeEmployee.java`, `PartTimeEmployee.java`, `Intern.java`           |
-| **4** | N24DCAT024 |   *Phan Trọng Hạnh*    |    Quản lý cấp cao & Nghiệp vụ tính thuế lũy tiến     |                 `Manager.java`, `Taxable.java`, `TaxCalculator.java`                 |
-| **5** | N24DCAT019 |     *Hoàng Bá Duy*     |   Tầng lưu trữ dữ liệu & Dịch vụ tính toán quỹ lương  | `EmployeeRepository.java`, `InMemoryEmployeeRepository.java`, `PayrollService.java` |
-| **6** | N24DCAT035 |     *Ngô Tiến Huy*     |   Tiện ích định dạng dữ liệu & Model bảng nhân viên   |                 `CurrencyFormatUtil.java`, `EmployeeTableModel.java`                 |
-| **7** | N24DCAT041 |     *Bùi Hải Khôi*     |    Model bảng lương & Bộ vẽ ô định dạng giao diện     |                 `PayrollTableModel.java`, `PayrollCellRenderer.java`                 |
-| **8** | N24DCAT061 |   *Nguyễn Ngọc Quân*   |     Hộp thoại tương tác & Form nhập liệu đa hình      |                              `EmployeeFormDialog.java`                               |
-| **9** | N24DCAT039 |   *Nguyễn Nam Khánh*   |     Cửa sổ phân tích & Biểu đồ thống kê JFreeChart    |                        `ChartWindow.java`, `ChartHelper.java`                         |
-| **10**| N24DCAT036 |    *Trần Minh Huy*     |    Tính năng cộng điểm BONUS & Sắp xếp đa tiêu chí    |                      `PayslipExporter.java`, `EmployeeComparator.java`               |
+| STT | MSSV | Họ và tên&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; | Vai trò | Các lớp Java phụ trách |
+| :---: | :---: | :--- | :--- | :--- |
+| **1** | N24DCAT040 | Nguyễn Quốc Khánh | Quản trị dự án, Điều phối Git & Khung sườn chính | `Main.java`, `BaseWindow.java`,<br> `MainWindow.java`, `AboutDialog.java` |
+| **2** | N24DCAT063 | Trần Vinh Quang | Lớp trừu tượng cha & Ngoại lệ xác thực nghiệp vụ | `Employee.java`,<br> `InvalidEmployeeDataException.java` |
+| **3** | N24DCAT059 | Nguyễn Vũ Hoàng Phúc | Các mô hình hợp đồng lao động trực tiếp | `FullTimeEmployee.java`,<br> `PartTimeEmployee.java`,<br> `Intern.java` |
+| **4** | N24DCAT024 | Phan Trọng Hạnh | Quản lý cấp cao & Nghiệp vụ tính thuế lũy tiến | `Manager.java`, `Taxable.java`,<br> `TaxCalculator.java` |
+| **5** | N24DCAT019 | Hoàng Bá Duy | Tầng lưu trữ dữ liệu & Dịch vụ tính toán quỹ lương | `EmployeeRepository.java`, `InMemoryEmployeeRepository.java`, `PayrollService.java` |
+| **6** | N24DCAT035 | Ngô Tiến Huy | Tiện ích định dạng dữ liệu & Model bảng nhân viên | `CurrencyFormatUtil.java`,<br> `EmployeeTableModel.java` |
+| **7** | N24DCAT041 | Bùi Hải Khôi | Model bảng lương & Bộ vẽ ô định dạng giao diện | `PayrollTableModel.java`,<br> `PayrollCellRenderer.java` |
+| **8** | N24DCAT061 | Nguyễn Ngọc Quân | Hộp thoại tương tác & Form nhập liệu đa hình | `EmployeeFormDialog.java` |
+| **9** | N24DCAT039 | Nguyễn Nam Khánh | Cửa sổ phân tích & Biểu đồ thống kê JFreeChart | `ChartWindow.java`,<br> `ChartHelper.java` |
+| **10**| N24DCAT036 | Trần Minh Huy | Tính năng BONUS & Sắp xếp đa tiêu chí | `PayslipExporter.java`,<br> `EmployeeComparator.java` |
 
 ---
-
+<!--
 ## 8. Bảng kiểm thử mẫu (Test Cases)
 
 Đáp ứng đầy đủ yêu cầu kiểm thử dữ liệu biên và dữ liệu lỗi theo quy định Báo cáo kỹ thuật:
@@ -253,28 +250,4 @@ Bảng phân công công việc được chuẩn hóa theo đúng kiến trúc m
 | **TC10** | Xuất phiếu lương BONUS | Chọn nhân viên bất kỳ và bấm Xuất | Sinh file `payslip_NVxxx.html` định dạng chuẩn | Đạt | Pass |
 
 ---
-
-## 9. Quy chuẩn nộp sản phẩm & Quản trị Git
-
-### 9.1 Cấu trúc gói nộp sản phẩm cuối cùng (`OOP_Nhom08_HRPayrollSystem.zip`)
-```
-OOP_Nhom08_HRPayrollSystem.zip
-├── source/
-├── app/
-│   └── OOP_Nhom08.jar
-├── report/
-│   └── BaoCao_Nhom08.pdf
-├── slides/
-│   └── Slide_Nhom08.pptx
-├── docs/
-│   ├── UML_ClassDiagram.drawio
-│   └── screenshots/
-└── README.md
-```
-
-### 9.2 Quy ước Commit trên Git
-Mọi thành viên thực hiện commit thường xuyên theo cú pháp Conventional Commits:
-* `feat: <nội dung>`: Thêm lớp mới hoặc chức năng mới (Ví dụ: `feat: implement TaxCalculator logic`).
-* `fix: <nội dung>`: Khắc phục lỗi hoặc sửa giao diện (Ví dụ: `fix: correct status bar update on employee removal`).
-* `docs: <nội dung>`: Cập nhật tài liệu, README hoặc sơ đồ UML.
-* `refactor: <nội dung>`: Tối ưu cấu trúc code mà không thay đổi nghiệp vụ.
+-->
