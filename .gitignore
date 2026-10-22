@@ -1,11 +1,5 @@
-# ===================================================================
-# Git Ignore - OOP_Nhom08_HRPayrollSystem (INT1332 - Nhom 08)
-# ===================================================================
-
-# Compiled Java class files
+# Compiled Java files
 *.class
-
-# Build / Output directories
 bin/
 build/
 target/
