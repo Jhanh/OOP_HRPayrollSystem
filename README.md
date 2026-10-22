@@ -1,9 +1,9 @@
 # HR Payroll System - Quản Lý Nhân Sự & Bảng Lương
 
-> **MÔN LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG (INT1332)**  
-> **HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG (PTIT)**  
-> **Nhóm thực hiện:** Nhóm 08 
-> **Chủ đề:** Quản lý Nhân sự & Bảng lương (*HR Payroll System*)  
+> **MÔN LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG (INT1332)**  <br>
+> **HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG (PTIT)**  <br>
+> **Nhóm thực hiện:** Nhóm 08 <br>
+> **Chủ đề:** Quản lý Nhân sự & Bảng lương (*HR Payroll System*)  <br>
 > **Công nghệ sử dụng:** Java SE 17+ (LTS) | Java Swing GUI | JFreeChart 1.5.4 | FlatLaf 3.6.2  
 
 ---
@@ -157,7 +157,7 @@ OOP_Nhom08_HRPayrollSystem/
 1. Nhân viên toàn thời gian (`FullTimeEmployee`):<br>
    &emsp; $$\text{Lương} = (\text{Lương cơ bản} \times \text{Hệ số thưởng}) + \text{Phụ cấp}$$
 2. Trưởng phòng / Quản lý (`Manager` - kế thừa `FullTimeEmployee`):<br>
-   &emsp; $$\text{Lương Manager} = \text{super.calculateSalary()} + (\text{Số người quản lý} \times 500.000\,\text{VNĐ})$$
+   &emsp; $$\text{Lương Manager} = \text{super.calculateSalary()} + (\text{Số người quản lý} \times 500.000 \text{VNĐ})$$
 3. Nhân viên bán thời gian (`PartTimeEmployee`):<br>
    &emsp; $$\text{Lương} = \text{Lương theo giờ} \times \text{Số giờ làm việc thực tế}$$
 4. Thực tập sinh (`Intern`):<br>
