@@ -1,7 +1,7 @@
 package vn.edu.ptit.oop.nhom08.model;
 
 import java.time.LocalDate;
-import vn.edu.ptit.oop.nhom02.exception.InvalidEmployeeDataException;
+import vn.edu.ptit.oop.nhom08.exception.InvalidEmployeeDataException;
 
 public class FullTimeEmployee extends Employee {
     private double salaryFactor; // He so luong
