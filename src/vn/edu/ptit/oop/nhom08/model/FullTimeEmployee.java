@@ -1,4 +1,4 @@
-package vn.edu.ptit.oop.nhom02.model;
+package vn.edu.ptit.oop.nhom08.model;
 
 import java.time.LocalDate;
 import vn.edu.ptit.oop.nhom02.exception.InvalidEmployeeDataException;
