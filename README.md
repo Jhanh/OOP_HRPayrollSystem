@@ -1,5 +1,11 @@
 # HR Payroll System - Quản Lý Nhân Sự & Bảng Lương
 
+[![Java 17+](https://img.shields.io/badge/Java-17%2B-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
+[![Swing GUI](https://img.shields.io/badge/GUI-Java%20Swing-007396?style=for-the-badge&logo=java&logoColor=white)](https://docs.oracle.com/javase/tutorial/uiswing/)
+[![FlatLaf](https://img.shields.io/badge/UI-FlatLaf%203.6.2-008080?style=for-the-badge)](https://www.formdev.com/flatlaf/)
+[![JFreeChart](https://img.shields.io/badge/Charts-JFreeChart%201.5.4-orange?style=for-the-badge)](https://www.jfree.org/jfreechart/)
+![Profile Views](https://komarev.com/ghpvc/?username=Jhanh-OOP-Nhom08-HRPayrollSystem&label=Views&color=0e75b6&style=for-the-badge)
+
 > **MÔN LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG (INT1332)**  <br>
 > **HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG (PTIT)**  <br>
 > **Nhóm thực hiện:** Nhóm 08 <br>
