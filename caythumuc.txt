@@ -1,9 +1,6 @@
 OOP_Nhom08_HRPayrollSystem/
-├── .vscode/
-│   └── settings.json
 ├── README.md
 ├── docs/
-│   ├── screenshots/
 │   ├── UML_ClassDiagram.drawio
 │   └── UML_ClassDiagram.png
 ├── lib/
