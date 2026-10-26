@@ -1,19 +1,22 @@
-package vn.edu.ptit.oop.nhom08.model;
+package vn.edu.ptit.oop.nhom02.model;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Objects;
-import vn.edu.ptit.oop.nhom08.exception.InvalidEmployeeDataException;
+import java.time.format.DateTimeParseException;
+import vn.edu.ptit.oop.nhom02.exception.InvalidEmployeeDataException;
 
-// Lớp trừu tượng cha cho tất cả loại nhân viên
+
+// Lop truu tuong Employee
 public abstract class Employee {
-    private String id;
-    private String fullName;
-    private String department;
-    private double baseSalary;
-    private LocalDate hireDate;
 
-    public Employee(String id, String fullName, String department, double baseSalary, LocalDate hireDate)
+    private String id;          
+    private String fullName;   
+    private String department;  
+    private double baseSalary; 
+    private LocalDate hireDate; 
+
+    
+    public Employee(String id, String fullName, String department, double baseSalary, LocalDate hireDate) 
             throws InvalidEmployeeDataException {
         setId(id);
         setFullName(fullName);
@@ -22,22 +25,26 @@ public abstract class Employee {
         setHireDate(hireDate);
     }
 
-    // Phương thức trừu tượng tính lương theo từng loại nhân viên
+    public Employee(String id, String fullName, String department, String baseSalaryStr, String hireDateStr) 
+            throws InvalidEmployeeDataException {
+        setId(id);
+        setFullName(fullName);
+        setDepartment(department);
+        setBaseSalary(baseSalaryStr);
+        setHireDate(hireDateStr);
+    }
+
     public abstract double calculateSalary();
 
-    // Tên hiển thị loại nhân viên
-    public abstract String getEmployeeType();
+    // loai nhan vien(Full-time, Part-time, Intern, Manager)
+    public abstract String getTypeName();
 
-    // Tính số năm thâm niên (final để cố định công thức)
     public final int getSeniorityYears() {
         if (hireDate == null) {
             return 0;
         }
-        int years = Period.between(hireDate, LocalDate.now()).getYears();
-        return Math.max(0, years);
+        return Period.between(hireDate, LocalDate.now()).getYears();
     }
-
-    // --- Getters & Setters ---
 
     public String getId() {
         return id;
@@ -45,9 +52,13 @@ public abstract class Employee {
 
     public void setId(String id) throws InvalidEmployeeDataException {
         if (id == null || id.trim().isEmpty()) {
-            throw new InvalidEmployeeDataException("Mã nhân viên không được để trống!");
+            throw new InvalidEmployeeDataException("Ma nhan vien khong duoc de trong!");
         }
-        this.id = id.trim();
+        String cleanId = id.trim();
+        if (!cleanId.matches("^[a-zA-Z0-9_-]+$")) {
+            throw new InvalidEmployeeDataException("Ma nhan vien chi duoc chua chu cai, chu so, dau gach ngang (-) hoac gach duoi (_)!");
+        }
+        this.id = cleanId;
     }
 
     public String getFullName() {
@@ -56,9 +67,13 @@ public abstract class Employee {
 
     public void setFullName(String fullName) throws InvalidEmployeeDataException {
         if (fullName == null || fullName.trim().isEmpty()) {
-            throw new InvalidEmployeeDataException("Họ và tên không được để trống!");
+            throw new InvalidEmployeeDataException("Ho ten nhan vien khong duoc de trong!");
         }
-        this.fullName = fullName.trim();
+        String cleanName = fullName.trim();
+        if (!cleanName.matches("^[\\p{L}\\s]+$")) {
+            throw new InvalidEmployeeDataException("Ho ten nhan vien chi duoc chua chu cai va khoang trang, khong chua so hay ky tu đac biet!");
+        }
+        this.fullName = cleanName;
     }
 
     public String getDepartment() {
@@ -67,7 +82,7 @@ public abstract class Employee {
 
     public void setDepartment(String department) throws InvalidEmployeeDataException {
         if (department == null || department.trim().isEmpty()) {
-            throw new InvalidEmployeeDataException("Phòng ban không được để trống!");
+            throw new InvalidEmployeeDataException("Phong ban khong duoc de trong!");
         }
         this.department = department.trim();
     }
@@ -78,9 +93,21 @@ public abstract class Employee {
 
     public void setBaseSalary(double baseSalary) throws InvalidEmployeeDataException {
         if (baseSalary < 0) {
-            throw new InvalidEmployeeDataException("Lương cơ bản không được âm!");
+            throw new InvalidEmployeeDataException("Luong co ban khong duoc nho hon 0!");
         }
         this.baseSalary = baseSalary;
+    }
+
+    public void setBaseSalary(String baseSalaryStr) throws InvalidEmployeeDataException {
+        if (baseSalaryStr == null || baseSalaryStr.trim().isEmpty()) {
+            throw new InvalidEmployeeDataException("Luong co ban khong duoc de trong!");
+        }
+        try {
+            double salary = Double.parseDouble(baseSalaryStr.trim());
+            setBaseSalary(salary);
+        } catch (NumberFormatException e) {
+            throw new InvalidEmployeeDataException("Luong co ban phai la so hop le, khong chua ki tu chu!");
+        }
     }
 
     public LocalDate getHireDate() {
@@ -89,30 +116,28 @@ public abstract class Employee {
 
     public void setHireDate(LocalDate hireDate) throws InvalidEmployeeDataException {
         if (hireDate == null) {
-            throw new InvalidEmployeeDataException("Ngày vào làm không được để trống!");
+            throw new InvalidEmployeeDataException("Ngay vao lam khong duoc de trong!");
         }
         if (hireDate.isAfter(LocalDate.now())) {
-            throw new InvalidEmployeeDataException("Ngày vào làm không thể ở tương lai!");
+            throw new InvalidEmployeeDataException("Ngay vao lam khong duoc lon hon ngay hien tai!");
         }
         this.hireDate = hireDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Employee)) return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(id, employee.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void setHireDate(String hireDateStr) throws InvalidEmployeeDataException {
+        if (hireDateStr == null || hireDateStr.trim().isEmpty()) {
+            throw new InvalidEmployeeDataException("Ngay vao lam khong duoc de trong!");
+        }
+        try {
+            LocalDate date = LocalDate.parse(hireDateStr.trim());
+            setHireDate(date);
+        } catch (DateTimeParseException e) {
+            throw new InvalidEmployeeDataException("Ngay vao lam khong dung dinh dang (YYYY-MM-DD) hoac ngay khong ton tai!");
+        }
     }
 
     @Override
     public String toString() {
-        return String.format("[%s] %s - %s - Phòng: %s - Lương: %,.0f VNĐ (Thâm niên: %d năm)",
-                id, fullName, getEmployeeType(), department, calculateSalary(), getSeniorityYears());
+        return "Ma NV: " + id + " | Ten: " + fullName + " | Loai: " + getTypeName() + " | Phong: " + department;
     }
 }
