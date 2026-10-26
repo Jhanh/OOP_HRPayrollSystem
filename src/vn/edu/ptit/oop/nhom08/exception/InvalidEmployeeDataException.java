@@ -1,12 +1,13 @@
-package vn.edu.ptit.oop.nhom02.exception;
+package vn.edu.ptit.oop.nhom08.exception;
 
-//Lop ngoai le tu dinh nghia dung khi du lieu nhan vien nhap vao bi sai hoac khong hop le.
-
+// Ngoại lệ khi dữ liệu nhân viên không hợp lệ
 public class InvalidEmployeeDataException extends Exception {
-    /**
-     * @param message Thong bao chi tiet ve loi du lieu
-     */
+
     public InvalidEmployeeDataException(String message) {
         super(message);
+    }
+
+    public InvalidEmployeeDataException(String message, Throwable cause) {
+        super(message, cause);
     }
 }
