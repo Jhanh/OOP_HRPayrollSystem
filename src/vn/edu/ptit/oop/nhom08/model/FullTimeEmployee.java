@@ -3,11 +3,11 @@ package vn.edu.ptit.oop.nhom08.model;
 import java.time.LocalDate;
 import vn.edu.ptit.oop.nhom08.exception.InvalidEmployeeDataException;
 
+// Nhân viên toàn thời gian (hưởng lương cơ bản * hệ số + thưởng, chịu thuế TNCN)
 public class FullTimeEmployee extends Employee implements Taxable {
-    private double salaryFactor; // Hệ số lương/thưởng (>= 1.0)
-    private double bonus;        // Tiền thưởng / phụ cấp (>= 0)
+    private double salaryFactor; // Hệ số lương (>= 1.0)
+    private double bonus;        // Tiền thưởng/phụ cấp (>= 0)
 
-    // Khởi tạo với kiểu dữ liệu chuẩn (double, LocalDate)
     public FullTimeEmployee(String id, String fullName, String department, double baseSalary, LocalDate hireDate,
                             double salaryFactor, double bonus) throws InvalidEmployeeDataException {
         super(id, fullName, department, baseSalary, hireDate);
@@ -15,10 +15,15 @@ public class FullTimeEmployee extends Employee implements Taxable {
         setBonus(bonus);
     }
 
-    // Khởi tạo tiện ích hỗ trợ nạp dữ liệu từ chuỗi (Form/CSV)
     public FullTimeEmployee(String id, String fullName, String department, String baseSalaryStr, String hireDateStr,
                             double salaryFactor, double bonus) throws InvalidEmployeeDataException {
         this(id, fullName, department, parseBaseSalary(baseSalaryStr), parseHireDate(hireDateStr), salaryFactor, bonus);
+    }
+
+    public FullTimeEmployee(String id, String fullName, String department, String baseSalaryStr, String hireDateStr,
+                            String salaryFactorStr, String bonusStr) throws InvalidEmployeeDataException {
+        this(id, fullName, department, parseBaseSalary(baseSalaryStr), parseHireDate(hireDateStr),
+                parseSalaryFactor(salaryFactorStr), parseBonus(bonusStr));
     }
 
     private static double parseBaseSalary(String baseSalaryStr) throws InvalidEmployeeDataException {
@@ -40,6 +45,28 @@ public class FullTimeEmployee extends Employee implements Taxable {
             return LocalDate.parse(hireDateStr.trim());
         } catch (Exception e) {
             throw new InvalidEmployeeDataException("Ngày vào làm không đúng định dạng (YYYY-MM-DD)!");
+        }
+    }
+
+    private static double parseSalaryFactor(String salaryFactorStr) throws InvalidEmployeeDataException {
+        try {
+            if (salaryFactorStr == null || salaryFactorStr.trim().isEmpty()) {
+                throw new InvalidEmployeeDataException("Hệ số lương không được để trống!");
+            }
+            return Double.parseDouble(salaryFactorStr.trim());
+        } catch (NumberFormatException e) {
+            throw new InvalidEmployeeDataException("Hệ số lương không đúng định dạng số!");
+        }
+    }
+
+    private static double parseBonus(String bonusStr) throws InvalidEmployeeDataException {
+        try {
+            if (bonusStr == null || bonusStr.trim().isEmpty()) {
+                throw new InvalidEmployeeDataException("Tiền thưởng/phụ cấp không được để trống!");
+            }
+            return Double.parseDouble(bonusStr.trim());
+        } catch (NumberFormatException e) {
+            throw new InvalidEmployeeDataException("Tiền thưởng/phụ cấp không đúng định dạng số!");
         }
     }
 
@@ -65,7 +92,6 @@ public class FullTimeEmployee extends Employee implements Taxable {
         this.bonus = bonus;
     }
 
-    // Bí danh getter để tương thích linh hoạt giữa bonusRate và allowance
     public double getBonusRate() {
         return salaryFactor;
     }
@@ -79,18 +105,9 @@ public class FullTimeEmployee extends Employee implements Taxable {
         return (getBaseSalary() * salaryFactor) + bonus;
     }
 
-    // Triển khai tính thuế TNCN theo biểu lũy tiến cho giao diện Taxable
+    @Override
     public double calculateTax() {
-        double income = calculateSalary();
-        if (income <= 10_000_000) {
-            return 0.0;
-        } else if (income <= 20_000_000) {
-            return (income - 10_000_000) * 0.05;
-        } else if (income <= 40_000_000) {
-            return 500_000 + (income - 20_000_000) * 0.10;
-        } else {
-            return 2_500_000 + (income - 40_000_000) * 0.20;
-        }
+        return TaxCalculator.calculateTax(calculateSalary());
     }
 
     @Override
@@ -98,7 +115,6 @@ public class FullTimeEmployee extends Employee implements Taxable {
         return "Toàn thời gian";
     }
 
-    // Tương thích thêm getTypeName nếu có component gọi
     public String getTypeName() {
         return "Full-time";
     }
