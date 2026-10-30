@@ -11,6 +11,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -25,11 +27,11 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.TreeSet;
 import java.util.function.Predicate;
-
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -49,26 +51,15 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.NumberFormatter;
-
 import vn.edu.ptit.oop.nhom08.exception.InvalidEmployeeDataException;
 import vn.edu.ptit.oop.nhom08.model.Employee;
 import vn.edu.ptit.oop.nhom08.model.FullTimeEmployee;
 import vn.edu.ptit.oop.nhom08.model.Intern;
 import vn.edu.ptit.oop.nhom08.model.Manager;
 import vn.edu.ptit.oop.nhom08.model.PartTimeEmployee;
+import vn.edu.ptit.oop.nhom08.util.CurrencyFormatUtil;
 
-/**
- * Hộp thoại Thêm / Sửa nhân viên.
- *
- * <ul>
- *   <li><b>Kế thừa</b>: extends {@link JDialog}; tạo đối tượng đa hình
- *       (FullTime / PartTime / Intern / Manager) và trả về kiểu {@link Employee}.</li>
- *   <li><b>Xử lý sự kiện</b>: ActionListener cho combo loại nhân viên, nút Lưu / Hủy,
- *       Enter / Esc, FocusListener tự định dạng tiền, DocumentListener xóa báo lỗi khi sửa.</li>
- *   <li><b>Try-Catch</b>: mọi lỗi dữ liệu là {@link InvalidEmployeeDataException}; lỗi gắn với
- *       một ô nhập cụ thể là {@link FieldException} để đưa con trỏ về đúng ô đó.</li>
- * </ul>
- */
+// Hộp thoại thêm mới hoặc chỉnh sửa hồ sơ nhân viên dùng CardLayout và JSpinner
 public class EmployeeFormDialog extends JDialog {
 
     private static final long serialVersionUID = 1L;
@@ -77,7 +68,6 @@ public class EmployeeFormDialog extends JDialog {
         FULL_TIME, PART_TIME, INTERN, MANAGER
     }
 
-    /** Lỗi dữ liệu gắn với một ô nhập cụ thể. */
     private static final class FieldException extends InvalidEmployeeDataException {
         private static final long serialVersionUID = 1L;
         private final transient JComponent field;
@@ -97,13 +87,11 @@ public class EmployeeFormDialog extends JDialog {
         }
     }
 
-    /** Một phép kiểm tra do model thực hiện. */
     @FunctionalInterface
     private interface ModelCheck {
         void run() throws InvalidEmployeeDataException;
     }
 
-    // ------------------------------------------------- giới hạn riêng của giao diện
     private static final int MAX_ID_LENGTH = 20;
     private static final int MAX_NAME_LENGTH = 100;
     private static final double MAX_MONEY = 1_000_000_000_000.0;
@@ -125,7 +113,6 @@ public class EmployeeFormDialog extends JDialog {
 
     private static final Color ERROR_COLOR = new Color(0xD32F2F);
 
-    // Hiển thị: dd/MM/yyyy. Nhập: chấp nhận d/M/yyyy và yyyy/M/d
     private static final DateTimeFormatter DATE_SHOW_FMT =
             DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT);
     private static final DateTimeFormatter DATE_DMY_FMT =
@@ -133,20 +120,6 @@ public class EmployeeFormDialog extends JDialog {
     private static final DateTimeFormatter DATE_YMD_FMT =
             DateTimeFormatter.ofPattern("uuuu/M/d").withResolverStyle(ResolverStyle.STRICT);
 
-    /** Ký hiệu số cố định cho các spinner: ',' là dấu thập phân. */
-    private static DecimalFormatSymbols vnSymbols() {
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setGroupingSeparator('.');
-        symbols.setDecimalSeparator(',');
-        return symbols;
-    }
-
-    /** Số hiển thị trong ô nhập: 12000000, 10000000.5 nếu có phần thập phân. */
-    private static String plainNumber(double value) {
-        return value == Math.rint(value) ? String.valueOf((long) value) : String.valueOf(value);
-    }
-
-    // ------------------------------------------------------------ trường chung
     private final JComboBox<EmployeeType> cboType = new JComboBox<>(EmployeeType.values());
     private final JTextField txtId = new JTextField(18);
     private final JTextField txtName = new JTextField(18);
@@ -155,23 +128,19 @@ public class EmployeeFormDialog extends JDialog {
     private final JTextField txtBaseSalary = new JTextField(18);
     private final JTextField txtHireDate = new JTextField(18);
 
-    // ------------------------------------------------------- trường theo từng loại
-    // Full-time
     private final JSpinner spnFtFactor = newDecimalSpinner(1.0, 1.0, MAX_SALARY_FACTOR, 0.1);
     private final JTextField txtFtBonus = new JTextField(18);
-    // Part-time
+
     private final JSpinner spnPtHours = newDecimalSpinner(0.0, 0.0, MAX_WORKING_HOURS, 0.5);
-    // Manager
+
     private final JSpinner spnMgFactor = newDecimalSpinner(1.0, 1.0, MAX_SALARY_FACTOR, 0.1);
     private final JTextField txtMgBonus = new JTextField(18);
     private final JSpinner spnMgManaged = newIntSpinner(0, 0, MAX_MANAGED_COUNT);
 
-    // ----------------------------------------------------------- vùng báo lỗi
     private final JLabel lblError = new JLabel(" ");
     private JComponent errorField;
     private Border errorOriginalBorder;
 
-    // ----------------------------------------------------------------- trạng thái
     private final Map<EmployeeType, String> typeLabels = new EnumMap<>(EmployeeType.class);
     private final CardLayout cardLayout = new CardLayout();
     private final JPanel cardPanel = new JPanel(cardLayout);
@@ -181,36 +150,26 @@ public class EmployeeFormDialog extends JDialog {
     private Employee result;
     private boolean confirmed;
 
-    // ---------------------------------------------------------------- constructor
-    /** Chế độ Thêm mới, không kiểm tra trùng mã, dùng danh sách phòng ban mặc định. */
     public EmployeeFormDialog(Frame owner) {
         this(owner, null, null, null);
     }
 
-    /** Như constructor đầy đủ nhưng dùng danh sách phòng ban mặc định. */
     public EmployeeFormDialog(Frame owner, Employee employeeToEdit, Predicate<String> idExistsChecker) {
         this(owner, employeeToEdit, idExistsChecker, null);
     }
 
-    /**
-     * @param owner           cửa sổ cha (MainWindow)
-     * @param employeeToEdit  nhân viên cần sửa; {@code null} nếu là thêm mới
-     * @param idExistsChecker hàm kiểm tra mã đã tồn tại (chỉ dùng khi thêm); có thể {@code null}
-     * @param departments     các phòng ban hiện có (cùng nguồn với combo lọc phòng ban của MainWindow);
-     *                        {@code null} hoặc rỗng thì dùng danh sách mặc định
-     */
     public EmployeeFormDialog(Frame owner, Employee employeeToEdit, Predicate<String> idExistsChecker,
                               Collection<String> departments) {
-        super(owner, employeeToEdit == null ? "Thêm nhân viên" : "Sửa thông tin nhân viên", true);
+        super(owner, employeeToEdit == null ? "Thêm nhân viên mới" : "Sửa thông tin nhân viên", true);
         this.editingEmployee = employeeToEdit;
         this.idExistsChecker = idExistsChecker;
 
-        // Nhãn loại nhân viên lấy từ model (một nguồn duy nhất)
         for (EmployeeType t : EmployeeType.values()) {
             typeLabels.put(t, createProbe(t).getEmployeeType());
         }
         fillDepartments(departments);
 
+        loadWindowIcon();
         initComponents();
         registerEvents();
 
@@ -227,8 +186,6 @@ public class EmployeeFormDialog extends JDialog {
         setLocationRelativeTo(owner);
     }
 
-    // ------------------------------------------------------------------ phòng ban
-    /** Nạp danh sách phòng ban; luôn có phòng ban của nhân viên đang sửa. */
     private void fillDepartments(Collection<String> departments) {
         TreeSet<String> names = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
         if (departments != null) {
@@ -247,7 +204,6 @@ public class EmployeeFormDialog extends JDialog {
         cboDepartment.setModel(new DefaultComboBoxModel<>(names.toArray(new String[0])));
     }
 
-    /** Nếu tên gõ vào trùng một phòng ban có sẵn thì dùng đúng cách viết có sẵn. */
     private String canonicalDepartment(String typed) {
         for (int i = 0; i < cboDepartment.getItemCount(); i++) {
             String existing = cboDepartment.getItemAt(i);
@@ -258,7 +214,6 @@ public class EmployeeFormDialog extends JDialog {
         return typed;
     }
 
-    // ------------------------------------------------------------------ dựng UI
     private void initComponents() {
         cboType.setRenderer(new DefaultListCellRenderer() {
             private static final long serialVersionUID = 1L;
@@ -270,13 +225,14 @@ public class EmployeeFormDialog extends JDialog {
                 return super.getListCellRendererComponent(list, shown, index, isSelected, cellHasFocus);
             }
         });
+
         JPanel root = new JPanel(new BorderLayout(0, 10));
         root.setBorder(BorderFactory.createEmptyBorder(14, 16, 12, 16));
 
-        // --- phần thông tin chung
         JPanel common = new JPanel(new GridBagLayout());
         common.setBorder(BorderFactory.createTitledBorder("Thông tin chung"));
         cboDepartment.setEditable(true);
+
         int r = 0;
         addRow(common, r++, "Loại nhân viên:", cboType);
         addRow(common, r++, "Mã nhân viên (*):", txtId);
@@ -285,14 +241,12 @@ public class EmployeeFormDialog extends JDialog {
         addRow(common, r++, lblBaseSalary, txtBaseSalary);
         addRow(common, r++, "Ngày vào làm (dd/MM/yyyy) (*):", txtHireDate);
 
-        // --- phần thông tin riêng theo loại (CardLayout)
         cardPanel.setBorder(BorderFactory.createTitledBorder("Thông tin theo loại nhân viên"));
         cardPanel.add(buildFullTimeCard(), CARD_FULL_TIME);
         cardPanel.add(buildPartTimeCard(), CARD_PART_TIME);
         cardPanel.add(buildInternCard(), CARD_INTERN);
         cardPanel.add(buildManagerCard(), CARD_MANAGER);
 
-        // --- vùng báo lỗi + nút bấm
         lblError.setForeground(ERROR_COLOR);
         lblError.setPreferredSize(new Dimension(420, 36));
         lblError.setVerticalAlignment(JLabel.TOP);
@@ -301,10 +255,11 @@ public class EmployeeFormDialog extends JDialog {
         JButton btnCancel = new JButton("Hủy");
         btnSave.addActionListener(e -> onSave());
         btnCancel.addActionListener(e -> onCancel());
+
         JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
         buttons.add(btnSave);
         buttons.add(btnCancel);
-        getRootPane().setDefaultButton(btnSave); // Enter = Lưu
+        getRootPane().setDefaultButton(btnSave);
 
         JPanel south = new JPanel(new BorderLayout(0, 6));
         south.add(lblError, BorderLayout.NORTH);
@@ -323,20 +278,20 @@ public class EmployeeFormDialog extends JDialog {
         JPanel p = newCard();
         addRow(p, 0, "Hệ số lương (>= 1.0):", spnFtFactor);
         addRow(p, 1, "Tiền thưởng/phụ cấp (VNĐ):", txtFtBonus);
-        addHint(p, 2, "Lương = Lương cơ bản × Hệ số lương + Thưởng/phụ cấp (để trống = 0). Chịu thuế TNCN.");
+        addHint(p, 2, "Lương = Lương cơ bản × Hệ số + Thưởng/phụ cấp (để trống = 0). Chịu thuế TNCN.");
         return p;
     }
 
     private JPanel buildPartTimeCard() {
         JPanel p = newCard();
         addRow(p, 0, "Số giờ làm trong tháng:", spnPtHours);
-        addHint(p, 1, "Lương = Lương theo giờ × Số giờ làm. Không chịu thuế TNCN.");
+        addHint(p, 1, "Lương = Lương theo giờ × Số giờ làm. Miễn thuế TNCN.");
         return p;
     }
 
     private JPanel buildInternCard() {
         JPanel p = newCard();
-        addHint(p, 0, "Thực tập sinh nhận trợ cấp cố định (nhập ở ô phía trên) và không chịu thuế TNCN.");
+        addHint(p, 0, "Thực tập sinh nhận trợ cấp cố định và miễn thuế TNCN.");
         return p;
     }
 
@@ -346,7 +301,7 @@ public class EmployeeFormDialog extends JDialog {
         addRow(p, 1, "Tiền thưởng/phụ cấp (VNĐ):", txtMgBonus);
         addRow(p, 2, "Số người quản lý:", spnMgManaged);
         addHint(p, 3, "Phụ cấp trách nhiệm = Số người quản lý × " + (long) Manager.ALLOWANCE_PER_PERSON
-                + " VNĐ. Thưởng/phụ cấp để trống = 0.");
+                + " VNĐ. Thưởng để trống = 0.");
         return p;
     }
 
@@ -362,27 +317,20 @@ public class EmployeeFormDialog extends JDialog {
         return newNumberSpinner(new SpinnerNumberModel(init, min, max, 1), true, "0");
     }
 
-    /**
-     * Tạo JSpinner với bộ đọc chữ NGHIÊM NGẶT và không phụ thuộc locale:
-     * <ul>
-     *   <li>Chấp nhận cả '.' lẫn ',' làm dấu thập phân; chữ thừa ("1,5abc") bị từ chối
-     *       (mặc định Swing lặng lẽ cắt bỏ phần thừa, và hiểu "1,5" thành 15 ở locale en-US).</li>
-     *   <li>PERSIST: giữ nguyên chữ người dùng gõ sai khi mất focus (mặc định Swing tự trả về giá
-     *       trị cũ, khiến lỗi bị nuốt mất) để {@code commitEdit()} báo lỗi khi bấm Lưu.</li>
-     * </ul>
-     */
     private static JSpinner newNumberSpinner(SpinnerNumberModel model, boolean integer, String pattern) {
         JSpinner spinner = new JSpinner(model);
         JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spinner, pattern);
         spinner.setEditor(editor);
         JFormattedTextField textField = editor.getTextField();
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.');
+        symbols.setDecimalSeparator(',');
         textField.setFormatterFactory(new DefaultFormatterFactory(
-                new StrictNumberFormatter(model, integer, new DecimalFormat(pattern, vnSymbols()))));
+                new StrictNumberFormatter(model, integer, new DecimalFormat(pattern, symbols))));
         textField.setFocusLostBehavior(JFormattedTextField.PERSIST);
         return spinner;
     }
 
-    /** Bộ đọc/ghi số cho JSpinner: nghiêm ngặt, không phụ thuộc locale, phạm vi lấy theo model. */
     private static final class StrictNumberFormatter extends NumberFormatter {
         private static final long serialVersionUID = 1L;
         private final transient SpinnerNumberModel model;
@@ -396,7 +344,6 @@ public class EmployeeFormDialog extends JDialog {
             setAllowsInvalid(true);
         }
 
-        // Phạm vi luôn đọc từ model
         @Override
         public Comparable<?> getMinimum() {
             return model.getMinimum();
@@ -409,7 +356,7 @@ public class EmployeeFormDialog extends JDialog {
 
         @Override
         public Object stringToValue(String text) throws ParseException {
-            String t = text == null ? "" : text.trim().replace(',', '.');
+            String t = (text == null) ? "" : text.trim().replace(',', '.');
             if (!t.matches(integer ? "^-?\\d+$" : "^-?\\d+(\\.\\d+)?$")) {
                 throw new ParseException("Không phải số hợp lệ: " + text, 0);
             }
@@ -431,7 +378,6 @@ public class EmployeeFormDialog extends JDialog {
         addRow(panel, row, new JLabel(label), field);
     }
 
-    /** Thêm một dòng "nhãn + ô nhập" vào panel dùng GridBagLayout. */
     private static void addRow(JPanel panel, int row, JLabel label, JComponent field) {
         GridBagConstraints lc = new GridBagConstraints();
         lc.gridx = 0;
@@ -450,7 +396,6 @@ public class EmployeeFormDialog extends JDialog {
         field.setPreferredSize(new Dimension(220, field.getPreferredSize().height));
     }
 
-    /** Dòng ghi chú nhỏ phía dưới một card. */
     private static void addHint(JPanel panel, int row, String text) {
         JLabel hint = new JLabel("<html><i>" + text + "</i></html>");
         hint.setPreferredSize(new Dimension(420, 36));
@@ -463,12 +408,9 @@ public class EmployeeFormDialog extends JDialog {
         panel.add(hint, c);
     }
 
-    // ------------------------------------------------------------------- sự kiện
     private void registerEvents() {
-        // Đổi loại nhân viên -> đổi card và nhãn của ô lương
         cboType.addActionListener(e -> onTypeChanged());
 
-        // Esc = Hủy
         KeyStroke esc = KeyStroke.getKeyStroke("ESCAPE");
         getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(esc, "cancel");
         getRootPane().getActionMap().put("cancel", new AbstractAction() {
@@ -480,7 +422,6 @@ public class EmployeeFormDialog extends JDialog {
             }
         });
 
-        // Người dùng sửa lại ô đang bị lỗi -> xóa báo lỗi + viền đỏ
         JComponent[] inputs = {txtId, txtName, cboDepartment, txtBaseSalary, txtHireDate,
                 txtFtBonus, txtMgBonus, spnFtFactor, spnPtHours, spnMgFactor, spnMgManaged};
         for (JComponent input : inputs) {
@@ -491,7 +432,6 @@ public class EmployeeFormDialog extends JDialog {
         }
     }
 
-    /** Xóa báo lỗi khi người dùng gõ vào chính ô đang bị đánh dấu lỗi. */
     private final class ClearOnEdit implements DocumentListener {
         private final JComponent owner;
 
@@ -551,7 +491,6 @@ public class EmployeeFormDialog extends JDialog {
         dispose();
     }
 
-    /** Xử lý nút Lưu: validate + tạo đối tượng; mọi lỗi dữ liệu được bắt tại đây. */
     private void onSave() {
         clearError();
         try {
@@ -560,17 +499,16 @@ public class EmployeeFormDialog extends JDialog {
             dispose();
         } catch (FieldException ex) {
             showError(ex.getField(), ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Lỗi dữ liệu", JOptionPane.WARNING_MESSAGE);
         } catch (InvalidEmployeeDataException ex) {
             showError(null, ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Lỗi dữ liệu", JOptionPane.WARNING_MESSAGE);
         } catch (RuntimeException ex) {
-            // Phòng hờ: lỗi bất ngờ ngoài dự kiến
             JOptionPane.showMessageDialog(this, "Không thể lưu nhân viên: " + ex.getMessage(),
                     "Lỗi hệ thống", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    // ------------------------------------------------------- báo lỗi + focus
-    /** Hiện lỗi ngay trong hộp thoại, viền đỏ và đưa con trỏ về đúng ô. */
     private void showError(JComponent field, String message) {
         clearError();
         lblError.setText("<html><body style='width:400px'>⚠ " + escapeHtml(message) + "</body></html>");
@@ -597,7 +535,6 @@ public class EmployeeFormDialog extends JDialog {
         }
     }
 
-    /** Thành phần thật sự nhận bàn phím: ô chữ bên trong JSpinner / JComboBox editable. */
     private static JComponent focusTargetOf(JComponent c) {
         if (c instanceof JSpinner) {
             JComponent editor = ((JSpinner) c).getEditor();
@@ -618,8 +555,6 @@ public class EmployeeFormDialog extends JDialog {
         return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
     }
 
-    // ------------------------------------------------------- đọc form + validate
-    /** Chạy một phép kiểm tra của model; nếu lỗi thì gắn lỗi vào ô {@code field}. */
     private static void check(JComponent field, ModelCheck check) throws FieldException {
         try {
             check.run();
@@ -628,11 +563,6 @@ public class EmployeeFormDialog extends JDialog {
         }
     }
 
-    /**
-     * Tạo đối tượng tạm ĐÚNG LỚP của loại nhân viên đang chọn, với dữ liệu mẫu hợp lệ (số dương).
-     * Dùng đúng lớp để luật riêng của lớp đó (ví dụ lương giờ của PartTime, trợ cấp của Intern)
-     * được áp dụng ngay ở bước kiểm tra và lỗi gắn được vào đúng ô nhập.
-     */
     private static Employee createProbe(EmployeeType type) {
         LocalDate date = LocalDate.now().minusDays(1);
         try {
@@ -648,19 +578,14 @@ public class EmployeeFormDialog extends JDialog {
                     return new FullTimeEmployee("PROBE", "Probe", "Probe", 1.0, date, 1.0, 1.0);
             }
         } catch (InvalidEmployeeDataException ex) {
-            // Lỗi lập trình: model từ chối chính dữ liệu mẫu của form
-            throw new IllegalStateException(
-                    "Model từ chối dữ liệu mẫu khi tạo đối tượng kiểm tra: " + ex.getMessage(), ex);
+            throw new IllegalStateException("Lỗi khởi tạo mẫu kiểm tra: " + ex.getMessage(), ex);
         }
     }
 
     private Employee buildEmployee() throws InvalidEmployeeDataException {
         EmployeeType type = (EmployeeType) cboType.getSelectedItem();
-
-        // Đối tượng tạm cùng lớp với loại đang chọn: validate bằng CHÍNH các setter của model
         Employee probe = createProbe(type);
 
-        // ---- mã nhân viên: khi sửa dùng nguyên mã cũ, không validate lại
         String id = editingEmployee != null ? editingEmployee.getId() : txtId.getText().trim();
         if (editingEmployee == null) {
             if (id.length() > MAX_ID_LENGTH) {
@@ -668,26 +593,23 @@ public class EmployeeFormDialog extends JDialog {
             }
             check(txtId, () -> probe.setId(id));
             if (idExistsChecker != null && idExistsChecker.test(id)) {
-                throw new FieldException(txtId, "Mã nhân viên \"" + id + "\" đã tồn tại.");
+                throw new FieldException(txtId, "Mã nhân viên \"" + id + "\" đã tồn tại!");
             }
         }
 
-        // ---- họ tên
         String name = txtName.getText().trim().replaceAll("\\s+", " ");
         if (name.length() > MAX_NAME_LENGTH) {
             throw new FieldException(txtName, "Họ tên tối đa " + MAX_NAME_LENGTH + " ký tự.");
         }
         check(txtName, () -> probe.setFullName(name));
 
-        // ---- phòng ban
         Object deptItem = cboDepartment.getEditor().getItem();
         String department = canonicalDepartment(
                 (deptItem == null ? "" : deptItem.toString()).trim().replaceAll("\\s+", " "));
         check(cboDepartment, () -> probe.setDepartment(department));
 
-        // ---- lương cơ bản / lương theo giờ / trợ cấp
-        String baseLabel = type == EmployeeType.PART_TIME ? "Lương theo giờ"
-                : type == EmployeeType.INTERN ? "Trợ cấp cố định" : "Lương cơ bản";
+        String baseLabel = (type == EmployeeType.PART_TIME) ? "Lương theo giờ"
+                : (type == EmployeeType.INTERN) ? "Trợ cấp cố định" : "Lương cơ bản";
         double baseSalary = parseMoney(txtBaseSalary, baseLabel, false);
         check(txtBaseSalary, () -> {
             if (probe instanceof PartTimeEmployee) {
@@ -699,11 +621,9 @@ public class EmployeeFormDialog extends JDialog {
             }
         });
 
-        // ---- ngày vào làm
         LocalDate hireDate = parseHireDate();
         check(txtHireDate, () -> probe.setHireDate(hireDate));
 
-        // ---- thông tin riêng theo loại
         switch (type) {
             case PART_TIME: {
                 double hours = readDoubleSpinner(spnPtHours, "Số giờ làm");
@@ -735,14 +655,12 @@ public class EmployeeFormDialog extends JDialog {
         }
     }
 
-    // -------------------------------------------------------------- ngày tháng
     private LocalDate parseHireDate() throws FieldException {
         String text = txtHireDate.getText().trim().replace('-', '/').replace('.', '/');
         if (text.isEmpty()) {
             throw new FieldException(txtHireDate, "Ngày vào làm không được để trống!");
         }
         try {
-            // 2023/08/15 hoặc 15/08/2023
             return text.matches("^\\d{4}/.*")
                     ? LocalDate.parse(text, DATE_YMD_FMT)
                     : LocalDate.parse(text, DATE_DMY_FMT);
@@ -752,7 +670,6 @@ public class EmployeeFormDialog extends JDialog {
         }
     }
 
-    // ------------------------------------------------------------------- số tiền
     private double parseMoney(JTextField field, String fieldName, boolean emptyAsZero) throws FieldException {
         String text = field.getText().trim();
         if (text.isEmpty()) {
@@ -763,12 +680,16 @@ public class EmployeeFormDialog extends JDialog {
         }
         double value;
         try {
-            value = Double.parseDouble(text);
-        } catch (NumberFormatException ex) {
-            throw new FieldException(field, fieldName + " phải là số hợp lệ (ví dụ: 12000000).", ex);
+            value = CurrencyFormatUtil.parse(text);
+        } catch (Exception ex) {
+            try {
+                value = Double.parseDouble(text.replace(",", "."));
+            } catch (NumberFormatException nfe) {
+                throw new FieldException(field, fieldName + " phải là số hợp lệ (ví dụ: 12000000 hoặc 12.000.000).", ex);
+            }
         }
         if (Double.isNaN(value) || Double.isInfinite(value)) {
-            throw new FieldException(field, fieldName + " phải là số hợp lệ (ví dụ: 12000000).");
+            throw new FieldException(field, fieldName + " phải là số hợp lệ.");
         }
         if (value > MAX_MONEY) {
             throw new FieldException(field, fieldName + " quá lớn (tối đa " + (long) MAX_MONEY + " VNĐ).");
@@ -776,7 +697,6 @@ public class EmployeeFormDialog extends JDialog {
         return value;
     }
 
-    // ------------------------------------------------------------------ spinner
     private int readIntSpinner(JSpinner spinner, String fieldName) throws FieldException {
         commitSpinner(spinner, fieldName);
         return ((Number) spinner.getValue()).intValue();
@@ -788,7 +708,6 @@ public class EmployeeFormDialog extends JDialog {
         return Math.round(v * 100.0) / 100.0;
     }
 
-    /** Ép JSpinner nhận chữ người dùng vừa gõ; sai định dạng hoặc ngoài phạm vi thì báo lỗi. */
     private void commitSpinner(JSpinner spinner, String fieldName) throws FieldException {
         try {
             spinner.commitEdit();
@@ -799,10 +718,6 @@ public class EmployeeFormDialog extends JDialog {
         }
     }
 
-    /**
-     * Gán giá trị cho spinner khi sửa. Nếu dữ liệu cũ nằm ngoài phạm vi giao diện thì nới phạm vi
-     * để vẫn hiển thị và lưu lại đúng giá trị cũ
-     */
     private static void setSpinnerSafely(JSpinner spinner, double value) {
         SpinnerNumberModel m = (SpinnerNumberModel) spinner.getModel();
         boolean isInt = m.getValue() instanceof Integer;
@@ -816,7 +731,6 @@ public class EmployeeFormDialog extends JDialog {
         m.setValue(val);
     }
 
-    // ---------------------------------------------------------- đổ dữ liệu khi sửa
     private void populateForm(Employee e) {
         txtId.setText(e.getId());
         txtId.setEnabled(false);
@@ -825,7 +739,6 @@ public class EmployeeFormDialog extends JDialog {
         txtBaseSalary.setText(plainNumber(e.getBaseSalary()));
         txtHireDate.setText(e.getHireDate().format(DATE_SHOW_FMT));
 
-        // Kiểm tra Manager TRƯỚC FullTimeEmployee vì Manager kế thừa FullTimeEmployee
         if (e instanceof Manager) {
             Manager m = (Manager) e;
             cboType.setSelectedItem(EmployeeType.MANAGER);
@@ -848,13 +761,37 @@ public class EmployeeFormDialog extends JDialog {
         onTypeChanged();
     }
 
-    // -------------------------------------------------------------------- kết quả
-    /** @return {@code true} nếu người dùng bấm Lưu và dữ liệu hợp lệ. */
+    private static String plainNumber(double value) {
+        return (value == Math.rint(value)) ? String.valueOf((long) value) : String.valueOf(value);
+    }
+
+    private void loadWindowIcon() {
+        String iconPath = (editingEmployee == null) ? "/resources/icons/add.png" : "/resources/icons/edit.png";
+        ImageIcon icon = loadIcon(iconPath);
+        if (icon == null) {
+            icon = loadIcon("/resources/icons/app.png");
+        }
+        if (icon != null) {
+            setIconImage(icon.getImage());
+        }
+    }
+
+    private static ImageIcon loadIcon(String path) {
+        URL url = EmployeeFormDialog.class.getResource(path);
+        if (url != null) {
+            return new ImageIcon(url);
+        }
+        File file = new File(path.startsWith("/") ? path.substring(1) : path);
+        if (file.exists()) {
+            return new ImageIcon(file.getAbsolutePath());
+        }
+        return null;
+    }
+
     public boolean isConfirmed() {
         return confirmed;
     }
 
-    /** @return nhân viên được tạo từ form, hoặc {@code null} nếu đã Hủy. */
     public Employee getResult() {
         return result;
     }
