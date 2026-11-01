@@ -5,13 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import vn.edu.ptit.oop.nhom08.model.Employee;
+import vn.edu.ptit.oop.nhom08.model.PartTimeEmployee;
 import vn.edu.ptit.oop.nhom08.util.CurrencyFormatUtil;
 
 // Mô hình bảng hiển thị danh sách hồ sơ nhân sự (Tab 1)
 public class EmployeeTableModel extends AbstractTableModel {
 
     private static final String[] COLUMNS = {
-        "STT", "Mã NV", "Họ và tên", "Phòng ban", "Loại nhân viên", "Lương cơ bản (VNĐ)", "Ngày vào làm", "Thâm niên"
+        "STT", "Mã NV", "Họ và tên", "Phòng ban", "Loại nhân viên", "Lương cơ bản", "Ngày vào làm", "Thâm niên"
     };
 
     private List<Employee> employees = new ArrayList<>();
@@ -107,6 +108,9 @@ public class EmployeeTableModel extends AbstractTableModel {
                 // Đa hình: mỗi lớp con tự trả về loại nhân viên tương ứng
                 return e.getEmployeeType();
             case 5:
+                if (e instanceof PartTimeEmployee) {
+                    return CurrencyFormatUtil.format(e.getBaseSalary()) + " / giờ";
+                }
                 return CurrencyFormatUtil.format(e.getBaseSalary());
             case 6:
                 return CurrencyFormatUtil.formatDate(e.getHireDate());

@@ -1,68 +1,118 @@
 package vn.edu.ptit.oop.nhom08.util;
 
-public class EmployeeComparator {
-    
-}
-package vn.edu.ptit.oop.nhom08.util;
-
 import java.text.Collator;
 import java.util.Comparator;
 import java.util.Locale;
-
 import vn.edu.ptit.oop.nhom08.model.Employee;
 
-/**
- * Bộ so sánh nhân viên đa tiêu chí (BONUS).
- * Mặc định: Phòng ban (A-Z) -> Lương (giảm dần) -> Tên (A-Z).
- */
+// Bộ so sánh nhân viên đa tiêu chí bằng Comparator.comparing(...).thenComparing(...) (BONUS)
 public class EmployeeComparator implements Comparator<Employee> {
 
-    public enum Criteria { DEPARTMENT, SALARY, NAME, ID }
+    public enum Criteria {
+        DEPARTMENT,
+        EMPLOYEE_TYPE,
+        SALARY_DESC,
+        SALARY_ASC,
+        NAME,
+        ID,
+        SENIORITY_DESC
+    }
 
-    private static final Collator VN = Collator.getInstance(new Locale("vi", "VN"));
+    private static final Collator VN_COLLATOR = Collator.getInstance(Locale.forLanguageTag("vi-VN"));
 
-    private final Comparator<Employee> chain;
+    private final Comparator<Employee> comparatorChain;
 
-    /** So sánh mặc định: phòng ban -> lương giảm dần -> tên. */
+    // So sánh mặc định: Phòng ban (A-Z) -> Lương giảm dần -> Họ tên (A-Z)
     public EmployeeComparator() {
-        this(Criteria.DEPARTMENT, Criteria.SALARY, Criteria.NAME);
+        this(Criteria.DEPARTMENT, Criteria.SALARY_DESC, Criteria.NAME);
     }
 
-    /** So sánh theo thứ tự tiêu chí tùy chọn (tiêu chí đứng trước ưu tiên hơn). */
-    public EmployeeComparator(Criteria... criteria) {
-        Comparator<Employee> result = null;
-        for (Criteria c : criteria) {
-            Comparator<Employee> next = byCriteria(c);
-            result = (result == null) ? next : result.thenComparing(next);
+    // So sánh tùy biến theo danh sách tiêu chí ưu tiên giảm dần
+    public EmployeeComparator(Criteria... criteriaList) {
+        Comparator<Employee> chain = null;
+        if (criteriaList != null && criteriaList.length > 0) {
+            for (Criteria c : criteriaList) {
+                Comparator<Employee> comp = createComparator(c);
+                chain = (chain == null) ? comp : chain.thenComparing(comp);
+            }
         }
-        this.chain = (result != null) ? result : byCriteria(Criteria.ID);
+        this.comparatorChain = (chain != null) ? chain : createComparator(Criteria.ID);
     }
 
-    private static Comparator<Employee> byCriteria(Criteria c) {
-        switch (c) {
+    private static Comparator<Employee> createComparator(Criteria criteria) {
+        switch (criteria) {
             case DEPARTMENT:
-                return (a, b) -> VN.compare(nvl(a.getDepartment()), nvl(b.getDepartment()));
-            case SALARY: // giảm dần
-                return (a, b) -> Double.compare(b.calculateSalary(), a.calculateSalary());
+                return Comparator.comparing(e -> safeString(e.getDepartment()), VN_COLLATOR);
+            case EMPLOYEE_TYPE:
+                return Comparator.comparing(e -> safeString(e.getEmployeeType()), VN_COLLATOR);
+            case SALARY_DESC:
+                return Comparator.comparingDouble(Employee::calculateSalary).reversed();
+            case SALARY_ASC:
+                return Comparator.comparingDouble(Employee::calculateSalary);
             case NAME:
-                return (a, b) -> VN.compare(nvl(a.getFullName()), nvl(b.getFullName()));
+                return Comparator.comparing(e -> safeString(e.getFullName()), VN_COLLATOR);
+            case SENIORITY_DESC:
+                return Comparator.comparingInt(Employee::getSeniorityYears).reversed();
             case ID:
             default:
-                return (a, b) -> nvl(a.getId()).compareTo(nvl(b.getId()));
+                return Comparator.comparing(e -> safeString(e.getId()));
         }
     }
 
-    private static String nvl(String s) {
-        return s == null ? "" : s;
+    private static String safeString(String s) {
+        return (s == null) ? "" : s;
     }
 
     @Override
-    public int compare(Employee a, Employee b) {
-        return chain.compare(a, b);
+    public int compare(Employee o1, Employee o2) {
+        if (o1 == o2) return 0;
+        if (o1 == null) return -1;
+        if (o2 == null) return 1;
+        return comparatorChain.compare(o1, o2);
     }
 
-    /** Đảo ngược thứ tự sắp xếp. */
-    public Comparator<Employee> descending() {
-        return chain.reversed();
+    // Bộ so sánh chuẩn: Phòng ban -> Lương giảm dần -> Họ tên
+    public static Comparator<Employee> defaultChain() {
+        return Comparator.comparing((Employee e) -> safeString(e.getDepartment()), VN_COLLATOR)
+                .thenComparing(Comparator.comparingDouble(Employee::calculateSalary).reversed())
+                .thenComparing((Employee e) -> safeString(e.getFullName()), VN_COLLATOR);
+    }
+
+    // Bộ so sánh theo lương giảm dần -> Thâm niên giảm dần
+    public static Comparator<Employee> bySalaryDescending() {
+        return Comparator.comparingDouble(Employee::calculateSalary).reversed()
+                .thenComparing(Comparator.comparingInt(Employee::getSeniorityYears).reversed());
+    }
+
+    // Bộ so sánh theo mã nhân viên (A-Z)
+    public static Comparator<Employee> byId() {
+        return Comparator.comparing(e -> safeString(e.getId()));
+    }
+
+    // Bộ so sánh theo họ tên tiếng Việt (A-Z)
+    public static Comparator<Employee> byName() {
+        return Comparator.comparing(e -> safeString(e.getFullName()), VN_COLLATOR);
+    }
+
+    // Bộ so sánh theo mức lương (Thấp đến Cao)
+    public static Comparator<Employee> bySalary() {
+        return Comparator.comparingDouble(Employee::calculateSalary);
+    }
+
+    // Bộ so sánh theo thâm niên (Ít năm đến Nhiều năm)
+    public static Comparator<Employee> bySeniority() {
+        return Comparator.comparingInt(Employee::getSeniorityYears);
+    }
+
+    // Bộ so sánh theo phòng ban tiếng Việt (A-Z)
+    public static Comparator<Employee> byDepartment() {
+        return Comparator.comparing((Employee e) -> safeString(e.getDepartment()), VN_COLLATOR)
+                .thenComparing(e -> safeString(e.getId()));
+    }
+
+    // Bộ so sánh theo loại nhân viên tiếng Việt (A-Z)
+    public static Comparator<Employee> byEmployeeType() {
+        return Comparator.comparing((Employee e) -> safeString(e.getEmployeeType()), VN_COLLATOR)
+                .thenComparing(e -> safeString(e.getId()));
     }
 }

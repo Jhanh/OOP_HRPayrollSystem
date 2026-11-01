@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.TreeSet;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -100,11 +101,11 @@ public class EmployeeFormDialog extends JDialog {
     private static final int MAX_MANAGED_COUNT = 500;
 
     private static final String[] DEFAULT_DEPARTMENTS =
-            {"Kỹ thuật", "Nhân sự", "Kế toán", "Kinh doanh", "Marketing"};
+            {"Nhân sự", "Kế toán", "Kinh doanh", "Marketing", "Công nghệ thông tin", "Chăm sóc khách hàng"};
 
-    private static final String LBL_BASE_DEFAULT = "Lương cơ bản (VNĐ) (*):";
-    private static final String LBL_BASE_HOURLY = "Lương theo giờ (VNĐ/giờ) (*):";
-    private static final String LBL_BASE_INTERN = "Trợ cấp cố định (VNĐ) (*):";
+    private static final String LBL_BASE_DEFAULT = "Lương cơ bản (*):";
+    private static final String LBL_BASE_HOURLY = "Lương theo giờ (*):";
+    private static final String LBL_BASE_INTERN = "Trợ cấp cố định (*):";
 
     private static final String CARD_FULL_TIME = "FULL_TIME";
     private static final String CARD_PART_TIME = "PART_TIME";
@@ -146,23 +147,30 @@ public class EmployeeFormDialog extends JDialog {
     private final JPanel cardPanel = new JPanel(cardLayout);
     private final Employee editingEmployee;
     private final Predicate<String> idExistsChecker;
+    private final Consumer<String> departmentAdder;
 
     private Employee result;
     private boolean confirmed;
 
     public EmployeeFormDialog(Frame owner) {
-        this(owner, null, null, null);
+        this(owner, null, null, null, null);
     }
 
     public EmployeeFormDialog(Frame owner, Employee employeeToEdit, Predicate<String> idExistsChecker) {
-        this(owner, employeeToEdit, idExistsChecker, null);
+        this(owner, employeeToEdit, idExistsChecker, null, null);
     }
 
     public EmployeeFormDialog(Frame owner, Employee employeeToEdit, Predicate<String> idExistsChecker,
                               Collection<String> departments) {
+        this(owner, employeeToEdit, idExistsChecker, departments, null);
+    }
+
+    public EmployeeFormDialog(Frame owner, Employee employeeToEdit, Predicate<String> idExistsChecker,
+                              Collection<String> departments, Consumer<String> departmentAdder) {
         super(owner, employeeToEdit == null ? "Thêm nhân viên mới" : "Sửa thông tin nhân viên", true);
         this.editingEmployee = employeeToEdit;
         this.idExistsChecker = idExistsChecker;
+        this.departmentAdder = departmentAdder;
 
         for (EmployeeType t : EmployeeType.values()) {
             typeLabels.put(t, createProbe(t).getEmployeeType());
@@ -214,6 +222,38 @@ public class EmployeeFormDialog extends JDialog {
         return typed;
     }
 
+    // Mở hộp thoại nhập nhanh phòng ban mới ngay trong form thêm/sửa nhân sự
+    private void promptAddNewDepartment() {
+        String newDept = JOptionPane.showInputDialog(this,
+                "Nhập tên phòng ban mới cần thêm:",
+                "Thêm phòng ban mới",
+                JOptionPane.QUESTION_MESSAGE);
+        if (newDept != null) {
+            newDept = newDept.trim();
+            if (newDept.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Tên phòng ban không được để trống!",
+                        "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) cboDepartment.getModel();
+            boolean exists = false;
+            for (int i = 0; i < model.getSize(); i++) {
+                if (model.getElementAt(i).equalsIgnoreCase(newDept)) {
+                    cboDepartment.setSelectedIndex(i);
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                model.addElement(newDept);
+                cboDepartment.setSelectedItem(newDept);
+            }
+            if (departmentAdder != null) {
+                departmentAdder.accept(newDept);
+            }
+        }
+    }
+
     private void initComponents() {
         cboType.setRenderer(new DefaultListCellRenderer() {
             private static final long serialVersionUID = 1L;
@@ -233,11 +273,19 @@ public class EmployeeFormDialog extends JDialog {
         common.setBorder(BorderFactory.createTitledBorder("Thông tin chung"));
         cboDepartment.setEditable(true);
 
+        JPanel deptPanel = new JPanel(new BorderLayout(5, 0));
+        deptPanel.add(cboDepartment, BorderLayout.CENTER);
+        JButton btnAddDept = new JButton("+");
+        btnAddDept.setPreferredSize(new Dimension(36, 26));
+        btnAddDept.setToolTipText("Thêm phòng ban mới vào danh mục");
+        btnAddDept.addActionListener(e -> promptAddNewDepartment());
+        deptPanel.add(btnAddDept, BorderLayout.EAST);
+
         int r = 0;
         addRow(common, r++, "Loại nhân viên:", cboType);
         addRow(common, r++, "Mã nhân viên (*):", txtId);
         addRow(common, r++, "Họ và tên (*):", txtName);
-        addRow(common, r++, "Phòng ban (*):", cboDepartment);
+        addRow(common, r++, "Phòng ban (*):", deptPanel);
         addRow(common, r++, lblBaseSalary, txtBaseSalary);
         addRow(common, r++, "Ngày vào làm (dd/MM/yyyy) (*):", txtHireDate);
 
@@ -276,32 +324,26 @@ public class EmployeeFormDialog extends JDialog {
 
     private JPanel buildFullTimeCard() {
         JPanel p = newCard();
-        addRow(p, 0, "Hệ số lương (>= 1.0):", spnFtFactor);
-        addRow(p, 1, "Tiền thưởng/phụ cấp (VNĐ):", txtFtBonus);
-        addHint(p, 2, "Lương = Lương cơ bản × Hệ số + Thưởng/phụ cấp (để trống = 0). Chịu thuế TNCN.");
+        addRow(p, 0, "Hệ số lương:", spnFtFactor);
+        addRow(p, 1, "Phụ cấp:", txtFtBonus);
         return p;
     }
 
     private JPanel buildPartTimeCard() {
         JPanel p = newCard();
         addRow(p, 0, "Số giờ làm trong tháng:", spnPtHours);
-        addHint(p, 1, "Lương = Lương theo giờ × Số giờ làm. Miễn thuế TNCN.");
         return p;
     }
 
     private JPanel buildInternCard() {
-        JPanel p = newCard();
-        addHint(p, 0, "Thực tập sinh nhận trợ cấp cố định và miễn thuế TNCN.");
-        return p;
+        return newCard();
     }
 
     private JPanel buildManagerCard() {
         JPanel p = newCard();
-        addRow(p, 0, "Hệ số lương (>= 1.0):", spnMgFactor);
-        addRow(p, 1, "Tiền thưởng/phụ cấp (VNĐ):", txtMgBonus);
+        addRow(p, 0, "Hệ số lương:", spnMgFactor);
+        addRow(p, 1, "Phụ cấp:", txtMgBonus);
         addRow(p, 2, "Số người quản lý:", spnMgManaged);
-        addHint(p, 3, "Phụ cấp trách nhiệm = Số người quản lý × " + (long) Manager.ALLOWANCE_PER_PERSON
-                + " VNĐ. Thưởng để trống = 0.");
         return p;
     }
 
@@ -394,18 +436,6 @@ public class EmployeeFormDialog extends JDialog {
         fc.insets = new Insets(4, 0, 4, 6);
         panel.add(field, fc);
         field.setPreferredSize(new Dimension(220, field.getPreferredSize().height));
-    }
-
-    private static void addHint(JPanel panel, int row, String text) {
-        JLabel hint = new JLabel("<html><i>" + text + "</i></html>");
-        hint.setPreferredSize(new Dimension(420, 36));
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0;
-        c.gridy = row;
-        c.gridwidth = 2;
-        c.anchor = GridBagConstraints.WEST;
-        c.insets = new Insets(4, 6, 4, 6);
-        panel.add(hint, c);
     }
 
     private void registerEvents() {
@@ -607,6 +637,9 @@ public class EmployeeFormDialog extends JDialog {
         String department = canonicalDepartment(
                 (deptItem == null ? "" : deptItem.toString()).trim().replaceAll("\\s+", " "));
         check(cboDepartment, () -> probe.setDepartment(department));
+        if (departmentAdder != null && department != null && !department.isEmpty()) {
+            departmentAdder.accept(department);
+        }
 
         String baseLabel = (type == EmployeeType.PART_TIME) ? "Lương theo giờ"
                 : (type == EmployeeType.INTERN) ? "Trợ cấp cố định" : "Lương cơ bản";
@@ -635,7 +668,7 @@ public class EmployeeFormDialog extends JDialog {
                 return new Intern(id, name, department, baseSalary, hireDate);
             case MANAGER: {
                 double factor = readDoubleSpinner(spnMgFactor, "Hệ số lương");
-                double bonus = parseMoney(txtMgBonus, "Tiền thưởng/phụ cấp", true);
+                double bonus = parseMoney(txtMgBonus, "Phụ cấp", true);
                 int managed = readIntSpinner(spnMgManaged, "Số người quản lý");
                 Manager mp = (Manager) probe;
                 check(spnMgFactor, () -> mp.setSalaryFactor(factor));
@@ -646,7 +679,7 @@ public class EmployeeFormDialog extends JDialog {
             case FULL_TIME:
             default: {
                 double factor = readDoubleSpinner(spnFtFactor, "Hệ số lương");
-                double bonus = parseMoney(txtFtBonus, "Tiền thưởng/phụ cấp", true);
+                double bonus = parseMoney(txtFtBonus, "Phụ cấp", true);
                 FullTimeEmployee fp = (FullTimeEmployee) probe;
                 check(spnFtFactor, () -> fp.setSalaryFactor(factor));
                 check(txtFtBonus, () -> fp.setBonus(bonus));
