@@ -54,3 +54,6 @@ replay_pid*.log
 # Runtime generated / Exported test files (Phiếu lương tạm thời, etc.)
 exports/
 temp/
+
+# Developer Internal Documentation & AI Context (Không nộp lên GitHub)
+forDev/

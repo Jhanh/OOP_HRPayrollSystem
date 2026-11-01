@@ -1,0 +1,371 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="nYrehki_OB7gbcroIh65" name="UML_HRPayrollSystem">
+    <mxGraphModel dx="1873" dy="1135" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Segoe UI;" value="&lt;font style=&quot;font-size: 26px;&quot; color=&quot;#007396&quot;&gt;&lt;b&gt;HR PAYROLL SYSTEM - SƠ ĐỒ THIẾT KẾ LỚP TỔNG THỂ (UML CLASS DIAGRAM)&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;&lt;font style=&quot;font-size: 13px;&quot; color=&quot;#475569&quot;&gt;Dự án: OOP_Nhom08_HRPayrollSystem | Môn: Lập trình Hướng đối tượng (INT1332) | Nhóm 08 - PTIT 2026&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="1800" x="60" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=20;spacingTop=12;fillColor=#F0F9FF;strokeColor=#0284C7;strokeWidth=2;fontSize=15;fontColor=#0F172A;arcSize=3;shadow=0;" value="&lt;b&gt;PACKAGE: vn.edu.ptit.oop.nhom08.model&lt;/b&gt;" vertex="1">
+          <mxGeometry height="950" width="1240" x="50" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-3" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#BAE6FD;strokeColor=#0284C7;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="&lt;&lt;abstract&gt;&gt;&#xa;Employee" vertex="1">
+          <mxGeometry height="326" width="340" x="440" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-4" parent="oC0Tzy3Y_NMfn5h-29Yn-3" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- id: String&#xa;- fullName: String&#xa;- department: String&#xa;- baseSalary: double&#xa;- hireDate: LocalDate" vertex="1">
+          <mxGeometry height="100" width="340" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-5" parent="oC0Tzy3Y_NMfn5h-29Yn-3" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#0284C7;" value="" vertex="1">
+          <mxGeometry height="6" width="340" y="144" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-6" parent="oC0Tzy3Y_NMfn5h-29Yn-3" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ calculateSalary()*: double&#xa;+ getEmployeeType()*: String&#xa;+ getSeniorityYears(): int&#xa;+ getId(): String / setId(id: String): void&#xa;+ getFullName(): String / setFullName(name): void&#xa;+ getDepartment(): String / setDepartment(dept): void&#xa;+ getBaseSalary(): double / setBaseSalary(sal): void&#xa;+ getHireDate(): LocalDate / setHireDate(date): void&#xa;+ equals(o: Object): boolean / hashCode(): int" vertex="1">
+          <mxGeometry height="176" width="340" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-7" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=32;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="PartTimeEmployee" vertex="1">
+          <mxGeometry height="188" width="270" x="70" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-8" parent="oC0Tzy3Y_NMfn5h-29Yn-7" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- workingHours: double" vertex="1">
+          <mxGeometry height="28" width="270" y="32" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-9" parent="oC0Tzy3Y_NMfn5h-29Yn-7" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#16A34A;" value="" vertex="1">
+          <mxGeometry height="6" width="270" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-10" parent="oC0Tzy3Y_NMfn5h-29Yn-7" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ calculateSalary(): double&#xa;+ getEmployeeType(): String&#xa;+ getHourlyRate(): double&#xa;+ setHourlyRate(rate: double): void&#xa;+ getWorkingHours(): double&#xa;+ setWorkingHours(hours: double): void" vertex="1">
+          <mxGeometry height="122" width="270" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-11" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=32;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="Intern" vertex="1">
+          <mxGeometry height="118" width="230" x="370" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-12" parent="oC0Tzy3Y_NMfn5h-29Yn-11" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ calculateSalary(): double&#xa;+ getEmployeeType(): String&#xa;+ getAllowance(): double&#xa;+ setAllowance(allowance: double): void" vertex="1">
+          <mxGeometry height="86" width="230" y="32" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-13" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=32;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#F3E8FF;strokeColor=#7E22CE;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="FullTimeEmployee" vertex="1">
+          <mxGeometry height="188" width="290" x="630" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-14" parent="oC0Tzy3Y_NMfn5h-29Yn-13" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- salaryFactor: double&#xa;- bonus: double" vertex="1">
+          <mxGeometry height="46" width="290" y="32" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-15" parent="oC0Tzy3Y_NMfn5h-29Yn-13" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#7E22CE;" value="" vertex="1">
+          <mxGeometry height="6" width="290" y="78" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-16" parent="oC0Tzy3Y_NMfn5h-29Yn-13" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ calculateSalary(): double&#xa;+ calculateTax(): double&#xa;+ getEmployeeType(): String&#xa;+ getSalaryFactor(): double / setSalaryFactor(f): void&#xa;+ getBonus(): double / setBonus(b): void" vertex="1">
+          <mxGeometry height="104" width="290" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-17" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#E9D5FF;strokeColor=#6B21A8;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="Manager&#xa;(Kế thừa 2 tầng)" vertex="1">
+          <mxGeometry height="218" width="290" x="630" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-18" parent="oC0Tzy3Y_NMfn5h-29Yn-17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="+ ALLOWANCE_PER_PERSON: double = 500k&#xa;- managedCount: int" vertex="1">
+          <mxGeometry height="46" width="290" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-19" parent="oC0Tzy3Y_NMfn5h-29Yn-17" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#6B21A8;" value="" vertex="1">
+          <mxGeometry height="6" width="290" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-20" parent="oC0Tzy3Y_NMfn5h-29Yn-17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ getResponsibilityAllowance(): double&#xa;+ calculateSalary(): double (super + phụ cấp)&#xa;+ calculateTax(): double&#xa;+ getEmployeeType(): String&#xa;+ getManagedCount(): int&#xa;+ setManagedCount(count: int): void" vertex="1">
+          <mxGeometry height="122" width="290" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-21" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#FEF08A;strokeColor=#CA8A04;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="&lt;&lt;interface&gt;&gt;&#xa;Taxable" vertex="1">
+          <mxGeometry height="76" width="290" x="960" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-22" parent="oC0Tzy3Y_NMfn5h-29Yn-21" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ calculateTax(): double" vertex="1">
+          <mxGeometry height="32" width="290" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-23" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#FEF9C3;strokeColor=#CA8A04;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="TaxCalculator&#xa;(4 Bậc Thuế TNCN)" vertex="1">
+          <mxGeometry height="254" width="290" x="960" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-24" parent="oC0Tzy3Y_NMfn5h-29Yn-23" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="+ LEVEL_1_LIMIT: double = 10tr&#xa;+ LEVEL_2_LIMIT: double = 20tr&#xa;+ LEVEL_3_LIMIT: double = 40tr&#xa;+ RATE_LEVEL_1..4: 0% .. 20%" vertex="1">
+          <mxGeometry height="82" width="290" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-25" parent="oC0Tzy3Y_NMfn5h-29Yn-23" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#CA8A04;" value="" vertex="1">
+          <mxGeometry height="6" width="290" y="126" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-26" parent="oC0Tzy3Y_NMfn5h-29Yn-23" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ calculateTax(income: double): double&#xa;+ calculateTax(e: Employee): double&#xa;+ calculateNetSalary(e: Employee): double&#xa;+ calculateTotalTax(list: List): double&#xa;+ getTaxBracket(income: double): int&#xa;+ getTaxBracketDescription(income): String" vertex="1">
+          <mxGeometry height="122" width="290" y="132" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-27" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=20;spacingTop=12;fillColor=#F0FDF4;strokeColor=#16A34A;strokeWidth=2;fontSize=15;fontColor=#0F172A;arcSize=3;shadow=0;" value="&lt;b&gt;PACKAGE: vn.edu.ptit.oop.nhom08.repository&lt;/b&gt;" vertex="1">
+          <mxGeometry height="950" width="430" x="1330" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-28" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#DCFCE7;strokeColor=#15803D;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="&lt;&lt;interface&gt;&gt;&#xa;EmployeeRepository" vertex="1">
+          <mxGeometry height="328" width="380" x="1355" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-29" parent="oC0Tzy3Y_NMfn5h-29Yn-28" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ findAll(): List&lt;Employee&gt;&#xa;+ findById(id: String): Optional&lt;Employee&gt;&#xa;+ save(employee: Employee): boolean&#xa;+ deleteById(id: String): boolean&#xa;+ existsById(id: String): boolean&#xa;+ findByDepartment(dept: String): List&lt;Employee&gt;&#xa;+ getAllDepartments(): List&lt;String&gt;&#xa;+ addDepartment(dept: String): void&#xa;+ count(): int&#xa;+ clear(): void&#xa;+ hasUnsavedChanges(): boolean&#xa;+ saveChanges(): void&#xa;+ reloadFromStorage(): boolean&#xa;+ backupToFile(file: File): boolean&#xa;+ restoreFromFile(file: File): boolean" vertex="1">
+          <mxGeometry height="284" width="380" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-30" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#BBF7D0;strokeColor=#15803D;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="InMemoryEmployeeRepository&#xa;(Dual-Level Storage RAM O(1) + CSV)" vertex="1">
+          <mxGeometry height="218" width="380" x="1355" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-31" parent="oC0Tzy3Y_NMfn5h-29Yn-30" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- storage: LinkedHashMap&lt;String, Employee&gt;&#xa;- customDepartments: TreeSet&lt;String&gt;&#xa;- hasUnsavedChanges: boolean = false" vertex="1">
+          <mxGeometry height="64" width="380" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-32" parent="oC0Tzy3Y_NMfn5h-29Yn-30" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#15803D;" value="" vertex="1">
+          <mxGeometry height="6" width="380" y="108" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-33" parent="oC0Tzy3Y_NMfn5h-29Yn-30" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ loadFromCsv(path: Path): boolean&#xa;+ saveToCsv(path: Path): boolean&#xa;+ parseCsvLine(line: String): List&lt;String&gt;&#xa;+ escapeCsv(s: String): String&#xa;+ (Triển khai 15 hàm của EmployeeRepository)" vertex="1">
+          <mxGeometry height="104" width="380" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-34" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=20;spacingTop=12;fillColor=#FFF7ED;strokeColor=#EA580C;strokeWidth=2;fontSize=15;fontColor=#0F172A;arcSize=3;shadow=0;" value="&lt;b&gt;PACKAGE: vn.edu.ptit.oop.nhom08.service&lt;/b&gt;" vertex="1">
+          <mxGeometry height="400" width="440" x="1800" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-35" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#FFEDD5;strokeColor=#C2410C;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="PayrollService&#xa;(Java 8 Stream API Processing)" vertex="1">
+          <mxGeometry height="290" width="390" x="1825" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-36" parent="oC0Tzy3Y_NMfn5h-29Yn-35" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- repository: EmployeeRepository" vertex="1">
+          <mxGeometry height="28" width="390" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-37" parent="oC0Tzy3Y_NMfn5h-29Yn-35" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#C2410C;" value="" vertex="1">
+          <mxGeometry height="6" width="390" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-38" parent="oC0Tzy3Y_NMfn5h-29Yn-35" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ PayrollService(repo: EmployeeRepository)&#xa;+ calculateTotalPayroll(): double&#xa;+ calculateTotalTax(): double&#xa;+ calculateTotalNetSalary(): double&#xa;+ calculatePayrollByDepartment(): Map&lt;String, Double&gt;&#xa;+ countEmployeesByDepartment(): Map&lt;String, Long&gt;&#xa;+ countEmployeesByType(): Map&lt;String, Long&gt;&#xa;+ getTotalEmployeeCount(): int&#xa;+ calculateAverageSalary(): double&#xa;+ findHighestPaidEmployee(): Optional&lt;Employee&gt;&#xa;+ getStatusBarSummary(): String" vertex="1">
+          <mxGeometry height="212" width="390" y="78" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-39" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=20;spacingTop=12;fillColor=#FAF5FF;strokeColor=#7E22CE;strokeWidth=2;fontSize=15;fontColor=#0F172A;arcSize=3;shadow=0;" value="&lt;b&gt;PACKAGE: vn.edu.ptit.oop.nhom08.common&lt;/b&gt;" vertex="1">
+          <mxGeometry height="400" width="440" x="2280" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-40" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#F3E8FF;strokeColor=#6B21A8;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="&lt;&lt;abstract&gt;&gt; BaseWindow&#xa;(extends JFrame - Template Method)" vertex="1">
+          <mxGeometry height="272" width="400" x="2300" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-41" parent="oC0Tzy3Y_NMfn5h-29Yn-40" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="# menuBar: JMenuBar&#xa;# fileMenu, viewMenu, helpMenu: JMenu&#xa;# toolBar: JToolBar&#xa;# statusBar: JPanel&#xa;# statusLabel: JLabel" vertex="1">
+          <mxGeometry height="100" width="400" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-42" parent="oC0Tzy3Y_NMfn5h-29Yn-40" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#6B21A8;" value="" vertex="1">
+          <mxGeometry height="6" width="400" y="144" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-43" parent="oC0Tzy3Y_NMfn5h-29Yn-40" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ BaseWindow(title: String, w: int, h: int)&#xa;# initUI()*: void&#xa;# showAbout(): void&#xa;# setStatus(msg: String): void&#xa;+ loadImageIcon(path: String): ImageIcon&#xa;+ addToolButton(icon, tooltip, action): JButton" vertex="1">
+          <mxGeometry height="122" width="400" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-44" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=20;spacingTop=12;fillColor=#F0FDFA;strokeColor=#0D9488;strokeWidth=2;fontSize=15;fontColor=#0F172A;arcSize=3;shadow=0;" value="&lt;b&gt;PACKAGE: vn.edu.ptit.oop.nhom08.ui (MainWindow, Dialogs &amp;amp; Panels)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="930" width="1440" x="1800" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-45" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#CCFBF1;strokeColor=#0F766E;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="MainWindow&#xa;(extends BaseWindow)" vertex="1">
+          <mxGeometry height="398" width="400" x="2300" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-46" parent="oC0Tzy3Y_NMfn5h-29Yn-45" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- repository: EmployeeRepository&#xa;- payrollService: PayrollService&#xa;- tabbedPane: JTabbedPane&#xa;- employeeTable, payrollTable: JTable&#xa;- employeeTableModel: EmployeeTableModel&#xa;- payrollTableModel: PayrollTableModel&#xa;- chartWindow: ChartWindow" vertex="1">
+          <mxGeometry height="136" width="400" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-47" parent="oC0Tzy3Y_NMfn5h-29Yn-45" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#0F766E;" value="" vertex="1">
+          <mxGeometry height="6" width="400" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-48" parent="oC0Tzy3Y_NMfn5h-29Yn-45" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="# initUI(): void&#xa;- setupMenus() / setupToolBarButtons()&#xa;- createEmployeeTab() / createPayrollTab()&#xa;- openAddDialog() / openEditDialog()&#xa;- deleteSelectedEmployee(): void&#xa;- openChartWindow(): void&#xa;- openExportPayslipDialog(): void&#xa;- openExportCompanyPayrollDialog(): void&#xa;- saveDataToFile() / reloadDataFromFile()&#xa;- openBackupDialog() / openRestoreDialog()&#xa;+ refreshData(): void" vertex="1">
+          <mxGeometry height="212" width="400" y="186" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-49" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#99F6E4;strokeColor=#0F766E;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="EmployeeFormDialog&#xa;(extends JDialog - CardLayout)" vertex="1">
+          <mxGeometry height="236" width="370" x="2810" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-50" parent="oC0Tzy3Y_NMfn5h-29Yn-49" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- cboType: JComboBox&lt;EmployeeType&gt;&#xa;- cardLayout: CardLayout / cardPanel: JPanel&#xa;- spinners &amp; textFields&#xa;- editingEmployee, result: Employee" vertex="1">
+          <mxGeometry height="82" width="370" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-51" parent="oC0Tzy3Y_NMfn5h-29Yn-49" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#0F766E;" value="" vertex="1">
+          <mxGeometry height="6" width="370" y="126" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-52" parent="oC0Tzy3Y_NMfn5h-29Yn-49" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ EmployeeFormDialog(owner, emp, checker, depts, adder)&#xa;- initComponents(): void / onTypeChanged(): void&#xa;- onSave(): void / onCancel(): void&#xa;+ isConfirmed(): boolean&#xa;+ getResult(): Employee" vertex="1">
+          <mxGeometry height="104" width="370" y="132" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-53" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#99F6E4;strokeColor=#0F766E;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="AboutDialog&#xa;(extends JDialog)" vertex="1">
+          <mxGeometry height="112" width="370" x="2810" y="910" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-54" parent="oC0Tzy3Y_NMfn5h-29Yn-53" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ AboutDialog(parent: Frame)&#xa;- initUI(): void&#xa;- addInfoRow(panel, r, label, val): void" vertex="1">
+          <mxGeometry height="68" width="370" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-55" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#CCFBF1;strokeColor=#0F766E;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="EmployeeTableModel&#xa;(extends AbstractTableModel)" vertex="1">
+          <mxGeometry height="164" width="340" x="1910" y="1190" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-56" parent="oC0Tzy3Y_NMfn5h-29Yn-55" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- employees: List&lt;Employee&gt;&#xa;- COLUMNS: String[]" vertex="1">
+          <mxGeometry height="46" width="340" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-57" parent="oC0Tzy3Y_NMfn5h-29Yn-55" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#0F766E;" value="" vertex="1">
+          <mxGeometry height="6" width="340" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-58" parent="oC0Tzy3Y_NMfn5h-29Yn-55" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ setEmployees(list: List&lt;Employee&gt;): void&#xa;+ getEmployeeAt(row: int): Employee&#xa;+ (Triển khai 6 hàm AbstractTableModel)" vertex="1">
+          <mxGeometry height="68" width="340" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-59" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#CCFBF1;strokeColor=#0F766E;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="PayrollTableModel&#xa;(extends AbstractTableModel)" vertex="1">
+          <mxGeometry height="200" width="340" x="2310" y="1190" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-60" parent="oC0Tzy3Y_NMfn5h-29Yn-59" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- employees: List&lt;Employee&gt;&#xa;- COLUMNS: String[]" vertex="1">
+          <mxGeometry height="46" width="340" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-61" parent="oC0Tzy3Y_NMfn5h-29Yn-59" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#0F766E;" value="" vertex="1">
+          <mxGeometry height="6" width="340" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-62" parent="oC0Tzy3Y_NMfn5h-29Yn-59" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ isSummaryRow(row: int): boolean&#xa;+ getEmployeeAt(row: int): Employee&#xa;+ calculateTotalGross(): double&#xa;+ calculateTotalTax(): double&#xa;+ calculateTotalNet(): double" vertex="1">
+          <mxGeometry height="104" width="340" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-63" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#CCFBF1;strokeColor=#0F766E;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="PayrollCellRenderer&#xa;(extends DefaultTableCellRenderer)" vertex="1">
+          <mxGeometry height="128" width="340" x="2700" y="1190" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-64" parent="oC0Tzy3Y_NMfn5h-29Yn-63" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- STRIPE_COLOR, SUMMARY_BG: Color&#xa;- NET_SALARY_COLOR: Color" vertex="1">
+          <mxGeometry height="46" width="340" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-65" parent="oC0Tzy3Y_NMfn5h-29Yn-63" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#0F766E;" value="" vertex="1">
+          <mxGeometry height="6" width="340" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-66" parent="oC0Tzy3Y_NMfn5h-29Yn-63" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ getTableCellRendererComponent(...): Component" vertex="1">
+          <mxGeometry height="32" width="340" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-67" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=20;spacingTop=12;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=2;fontSize=15;fontColor=#0F172A;arcSize=3;shadow=0;" value="&lt;b&gt;PACKAGE: vn.edu.ptit.oop.nhom08.exception&lt;/b&gt;" vertex="1">
+          <mxGeometry height="180" width="450" x="50" y="1080" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-68" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#FEE2E2;strokeColor=#DC2626;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="InvalidEmployeeDataException&#xa;(extends Exception)" vertex="1">
+          <mxGeometry height="94" width="400" x="75" y="1130" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-69" parent="oC0Tzy3Y_NMfn5h-29Yn-68" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ InvalidEmployeeDataException(message: String)&#xa;+ InvalidEmployeeDataException(msg, cause: Throwable)" vertex="1">
+          <mxGeometry height="50" width="400" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-70" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=20;spacingTop=12;fillColor=#FAF5FF;strokeColor=#7E22CE;strokeWidth=2;fontSize=15;fontColor=#0F172A;arcSize=3;shadow=0;" value="&lt;b&gt;PACKAGE: vn.edu.ptit.oop.nhom08.util &amp;amp; Entry Point&lt;/b&gt;" vertex="1">
+          <mxGeometry height="580" width="1610" x="50" y="1290" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-71" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#F3E8FF;strokeColor=#7E22CE;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="CurrencyFormatUtil&#xa;(Static Utility)" vertex="1">
+          <mxGeometry height="200" width="330" x="80" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-72" parent="oC0Tzy3Y_NMfn5h-29Yn-71" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- PATTERN: String = #,##0&#xa;- DATE_FORMATTER: dd/MM/yyyy" vertex="1">
+          <mxGeometry height="46" width="330" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-73" parent="oC0Tzy3Y_NMfn5h-29Yn-71" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#7E22CE;" value="" vertex="1">
+          <mxGeometry height="6" width="330" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-74" parent="oC0Tzy3Y_NMfn5h-29Yn-71" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ format(amount: double): String&#xa;+ formatWithUnit(amount: double): String&#xa;+ parse(text: String): double&#xa;+ formatDate(date: LocalDate): String&#xa;+ parseDate(text: String): LocalDate" vertex="1">
+          <mxGeometry height="104" width="330" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-75" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#F3E8FF;strokeColor=#7E22CE;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="EmployeeComparator&#xa;(implements Comparator&lt;Employee&gt;)" vertex="1">
+          <mxGeometry height="236" width="360" x="440" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-76" parent="oC0Tzy3Y_NMfn5h-29Yn-75" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- VN_COLLATOR: Collator (vi-VN)&#xa;- comparatorChain: Comparator" vertex="1">
+          <mxGeometry height="46" width="360" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-77" parent="oC0Tzy3Y_NMfn5h-29Yn-75" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#7E22CE;" value="" vertex="1">
+          <mxGeometry height="6" width="360" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-78" parent="oC0Tzy3Y_NMfn5h-29Yn-75" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ compare(o1: Employee, o2: Employee): int&#xa;+ byId(): Comparator&lt;Employee&gt;&#xa;+ byName(): Comparator&lt;Employee&gt; (Collator vi-VN)&#xa;+ bySalary(): Comparator&lt;Employee&gt;&#xa;+ bySeniority(): Comparator&lt;Employee&gt;&#xa;+ byDepartment(): Comparator&lt;Employee&gt;&#xa;+ byEmployeeType(): Comparator&lt;Employee&gt;" vertex="1">
+          <mxGeometry height="140" width="360" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-79" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#F3E8FF;strokeColor=#7E22CE;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="ChartHelper&#xa;(JFreeChart Integration)" vertex="1">
+          <mxGeometry height="182" width="380" x="830" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-80" parent="oC0Tzy3Y_NMfn5h-29Yn-79" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- Default chart styles (AWT)" vertex="1">
+          <mxGeometry height="28" width="380" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-81" parent="oC0Tzy3Y_NMfn5h-29Yn-79" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#7E22CE;" value="" vertex="1">
+          <mxGeometry height="6" width="380" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-82" parent="oC0Tzy3Y_NMfn5h-29Yn-79" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ calculateDeptSummaries(list): Map&#xa;+ createSalaryBarChart(list, msg): JFreeChart&#xa;+ createEmployeeStructurePieChart(list): JFreeChart&#xa;+ createSalaryDataset(list): DefaultCategoryDataset&#xa;+ createEmployeeStructureDataset(list): DefaultPieDataset" vertex="1">
+          <mxGeometry height="104" width="380" y="78" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-83" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#E9D5FF;strokeColor=#7E22CE;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="ChartWindow&#xa;(extends JFrame - Real-time updates)" vertex="1">
+          <mxGeometry height="182" width="380" x="830" y="1606" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-84" parent="oC0Tzy3Y_NMfn5h-29Yn-83" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#1E293B;fontFamily=Segoe UI;" value="- barChart: JFreeChart&#xa;- pieChart: JFreeChart&#xa;- lblStatus: JLabel" vertex="1">
+          <mxGeometry height="64" width="380" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-85" parent="oC0Tzy3Y_NMfn5h-29Yn-83" style="line;strokeWidth=1.5;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#7E22CE;" value="" vertex="1">
+          <mxGeometry height="6" width="380" y="108" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-86" parent="oC0Tzy3Y_NMfn5h-29Yn-83" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ ChartWindow(initialEmployees: List&lt;Employee&gt;)&#xa;- initUI(employees): void&#xa;+ updateData(updatedList: List&lt;Employee&gt;): void" vertex="1">
+          <mxGeometry height="68" width="380" y="114" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-87" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#F3E8FF;strokeColor=#7E22CE;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="PayslipExporter&#xa;(HTML / CSV / TXT Export)" vertex="1">
+          <mxGeometry height="166" width="490" x="80" y="1606" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-88" parent="oC0Tzy3Y_NMfn5h-29Yn-87" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ exportToTxt(e: Employee, filePath): void&#xa;+ exportToHtml(e: Employee, filePath): void&#xa;+ export(employee, filePath): void&#xa;+ exportCompanyPayroll(list, filePath): void&#xa;+ exportCompanyPayrollToHtml(list, filePath): void&#xa;+ exportCompanyPayrollToCsv(list, filePath): void" vertex="1">
+          <mxGeometry height="122" width="490" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-89" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;swimlaneFillColor=#FEE2E2;strokeColor=#DC2626;strokeWidth=2;rounded=1;arcSize=4;fontColor=#0F172A;fontSize=13;shadow=1;" value="Main&#xa;(Điểm khởi chạy ứng dụng)" vertex="1">
+          <mxGeometry height="130" width="360" x="1240" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-90" parent="oC0Tzy3Y_NMfn5h-29Yn-89" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;spacingTop=5;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#334155;fontFamily=Segoe UI;" value="+ main(args: String[]): void&#xa;  - FlatLightLaf.setup()&#xa;  - Cấu hình Font Segoe UI cho JFreeChart&#xa;  - SwingUtilities.invokeLater(MainWindow::new)" vertex="1">
+          <mxGeometry height="86" width="360" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-91" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;spacingTop=6;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=2;fontSize=12;fontFamily=Segoe UI;shadow=1;" value="&lt;b&gt;CHÚ GIẢI KÝ HIỆU UML (LEGEND)&lt;/b&gt;&lt;hr/&gt;&lt;div align=&quot;left&quot; style=&quot;padding:4px;&quot;&gt;&lt;b&gt;1. Kế thừa (Inheritance):&lt;/b&gt; Mũi tên tam giác rỗng liền nét (Manager &amp;rarr; FullTime &amp;rarr; Employee)&lt;br/&gt;&lt;b&gt;2. Thực thi giao diện (Realization):&lt;/b&gt; Mũi tên tam giác nét đứt (FullTime &amp;rarr; Taxable)&lt;br/&gt;&lt;b&gt;3. Phụ thuộc / Mở giao diện (Dependency):&lt;/b&gt; Mũi tên mở nét đứt (MainWindow &amp;rarr; Dialogs)&lt;br/&gt;&lt;b&gt;4. Kết hợp (Association):&lt;/b&gt; Mũi tên mở liền nét (MainWindow &amp;rarr; Service &amp;rarr; Repository)&lt;hr/&gt;&lt;font color=&quot;#007396&quot;&gt;&lt;b&gt;Nhóm 08 - PTIT:&lt;/b&gt; Chuẩn hóa 24 lớp Java theo kiến trúc 3 tầng.&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="240" width="560" x="2160" y="1630" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-92" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endSize=14;endFill=0;strokeWidth=2.5;strokeColor=#0284C7;exitX=0.5;exitY=0;entryX=0.041;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" target="oC0Tzy3Y_NMfn5h-29Yn-6" value="extends">
+          <mxGeometry relative="1" x="0.1186" as="geometry">
+            <Array as="points">
+              <mxPoint x="205" y="508" />
+              <mxPoint x="453.9" y="508" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-93" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endSize=14;endFill=0;strokeWidth=2.5;strokeColor=#0284C7;exitX=0.5;exitY=0;entryX=0.132;entryY=1;" target="oC0Tzy3Y_NMfn5h-29Yn-3" value="extends">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-94" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endSize=14;endFill=0;strokeWidth=2.5;strokeColor=#0284C7;exitX=0.5;exitY=0;entryX=0.85;entryY=1;" target="oC0Tzy3Y_NMfn5h-29Yn-3" value="extends">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="775" y="508" />
+              <mxPoint x="729" y="508" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-95" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endSize=14;endFill=0;strokeWidth=2.5;strokeColor=#7E22CE;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="oC0Tzy3Y_NMfn5h-29Yn-13" value="extends">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-96" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;dashed=1;endSize=14;endFill=0;strokeWidth=2.5;strokeColor=#CA8A04;exitX=1;exitY=0.22;entryX=0;entryY=0.5;" target="oC0Tzy3Y_NMfn5h-29Yn-21" value="implements">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-97" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;dashed=1;strokeWidth=2;strokeColor=#CA8A04;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="oC0Tzy3Y_NMfn5h-29Yn-21" value="calculates">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-98" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;dashed=1;endSize=14;endFill=0;strokeWidth=2.5;strokeColor=#15803D;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="oC0Tzy3Y_NMfn5h-29Yn-28" value="implements">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-99" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=2.5;strokeColor=#EA580C;exitX=0;exitY=0.45;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="oC0Tzy3Y_NMfn5h-29Yn-28" value="uses">
+          <mxGeometry relative="1" x="0.2713" y="-4" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="1825" y="314" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-100" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endSize=14;endFill=0;strokeWidth=2.5;strokeColor=#7E22CE;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="oC0Tzy3Y_NMfn5h-29Yn-40" value="extends">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-101" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=2.5;strokeColor=#0D9488;exitX=0;exitY=0.1;entryX=0.5;entryY=1;" target="oC0Tzy3Y_NMfn5h-29Yn-35" value="has">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2020" y="687" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-102" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=2.5;strokeColor=#0D9488;exitX=0;exitY=0.35;entryX=1;entryY=0.76;" target="oC0Tzy3Y_NMfn5h-29Yn-30" value="has">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2300" y="785.7" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-103" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;dashed=1;strokeWidth=2;strokeColor=#0F766E;exitX=1;exitY=0.28;entryX=0;entryY=0.5;" target="oC0Tzy3Y_NMfn5h-29Yn-49" value="opens">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2810" y="751.4" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-104" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;dashed=1;strokeWidth=2;strokeColor=#0F766E;exitX=1;exitY=0.78;entryX=0;entryY=0.5;" target="oC0Tzy3Y_NMfn5h-29Yn-53" value="opens">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2700" y="966" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-105" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=2;strokeColor=#0D9488;exitX=0.15;exitY=1;entryX=0.5;entryY=0;" target="oC0Tzy3Y_NMfn5h-29Yn-55" value="binds">
+          <mxGeometry relative="1" x="0.3241" as="geometry">
+            <Array as="points">
+              <mxPoint x="2360" y="1145" />
+              <mxPoint x="2080" y="1145" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-106" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;strokeWidth=2;strokeColor=#0D9488;exitX=0.45;exitY=1;entryX=0.5;entryY=0;" target="oC0Tzy3Y_NMfn5h-29Yn-59" value="binds">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2480" y="1190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oC0Tzy3Y_NMfn5h-29Yn-107" edge="1" parent="1" source="oC0Tzy3Y_NMfn5h-29Yn-83" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;dashed=1;strokeWidth=2;strokeColor=#7E22CE;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="oC0Tzy3Y_NMfn5h-29Yn-79" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

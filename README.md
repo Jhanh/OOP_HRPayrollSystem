@@ -22,7 +22,7 @@
 5. [Quy tắc nghiệp vụ tính Lương & Bảng tính Thuế TNCN](#5-quy-tắc-nghiệp-vụ-tính-lương--bảng-tính-thuế-tncn)
 6. [Lưu ý kỹ thuật](#6-lưu-ý-kỹ-thuật)
 7. [Bảng phân công nhiệm vụ](#7-bảng-phân-công-nhiệm-vụ)
-<!-- 8. [Bảng kiểm thử mẫu (Test Cases)](#8-bảng-kiểm-thử-mẫu-test-cases) -->
+8. [Bảng kiểm thử mẫu (Test Cases)](#8-bảng-kiểm-thử-mẫu-test-cases)
 
 ---
 
@@ -86,19 +86,20 @@ Dự án được nhóm thiết kế tinh gọn, bám sát kiến trúc phân t�
 ```
 OOP_Nhom08_HRPayrollSystem/
 ├── .gitignore                          # Quy chuẩn các file tạm và thư mục rác bị loại bỏ
-├── .vscode/
-│   └── settings.json                   # Cấu hình môi trường VS Code
 ├── README.md                           # Tài liệu dự án đầy đủ cho cả nhóm
 ├── caythumuc.txt                       # Cây thư mục của toàn bộ dự án
-├── docs/                               # Tài liệu báo cáo, sơ đồ UML & ảnh chụp giao diện
-│   ├── screenshots/                    # Ảnh chụp màn hình chức năng chạy thực tế
-│   ├── UML_ClassDiagram.drawio         # File nguồn vẽ thiết kế lớp
-│   └── UML_ClassDiagram.png            # File ảnh sơ đồ lớp nhúng vào báo cáo
+├── data/                               # Dữ liệu lưu trữ bền vững (Persistence)
+│   ├── employees.csv                   # Cơ sở dữ liệu mẫu mặc định 17 nhân sự chuẩn (tổng quỹ lương 300.150.000 VNĐ)
+│   └── test.csv                        # Bộ dữ liệu thử nghiệm tải cao 1.000 nhân sự (stress test & benchmark)
+├── docs/                               # Tài liệu báo cáo, đề tài & sơ đồ thiết kế UML
+│   ├── Java_OOP_ThuyetTrinh_10Nhom_1.pdf # Đề bài & Hướng dẫn chính thức của Giảng viên
+│   ├── UML_ClassDiagram.drawio         # Tệp nguồn vẽ thiết kế lớp chi tiết
+│   └── UML_ClassDiagram.png            # Ảnh sơ đồ thiết kế lớp chất lượng cao
 ├── lib/                                # Các thư viện JAR mở rộng
-│   ├── flatlaf-3.6.2.jar
-│   └── jfreechart-1.5.4.jar
+│   ├── flatlaf-3.6.2.jar               # Giao diện phẳng FlatLaf hiện đại
+│   └── jfreechart-1.5.4.jar            # Thư viện vẽ biểu đồ phân tích thống kê
 ├── resources/
-│   └── icons/                          # Bộ 6 icon chuẩn kích thước 32x32 PNG trong suốt
+│   └── icons/                          # Bộ icon 32x32 PNG trong suốt
 │       ├── add.png                     # Nút Thêm nhân viên
 │       ├── app.png                     # Biểu tượng cửa sổ ứng dụng (Title bar icon)
 │       ├── chart.png                   # Nút Mở cửa sổ biểu đồ phân tích
@@ -109,37 +110,37 @@ OOP_Nhom08_HRPayrollSystem/
     └── vn/edu/ptit/oop/nhom08/
         ├── Main.java                   # [File 01] Điểm vào chương trình, khởi động Swing EDT
         ├── common/
-        │   └── BaseWindow.java         # [File 02] Lớp trừu tượng bắt buộc của MainWindow
+        │   └── BaseWindow.java         # [File 02] Lớp trừu tượng cơ sở (Template Method)
         ├── exception/
-        │   └── InvalidEmployeeDataException.java # [File 03] Ngoại lệ kiểm tra dữ liệu nhập liệu
+        │   └── InvalidEmployeeDataException.java # [File 03] Ngoại lệ kiểm tra dữ liệu đầu vào
         ├── model/
         │   ├── Employee.java           # [File 04] Lớp trừu tượng cha chứa thông tin nhân sự
         │   ├── FullTimeEmployee.java   # [File 05] Lớp con: Nhân viên toàn thời gian
         │   ├── Intern.java             # [File 06] Lớp con: Thực tập sinh
-        │   ├── Manager.java            # [File 07] Lớp con kế thừa 2 tầng từ FullTimeEmployee
+        │   ├── Manager.java            # [File 07] Lớp con: Quản lý kế thừa 2 tầng
         │   ├── PartTimeEmployee.java   # [File 08] Lớp con: Nhân viên bán thời gian
-        │   ├── TaxCalculator.java      # [File 09] Lớp nghiệp vụ tính toán thuế TNCN theo bậc lũy tiến
-        │   └── Taxable.java            # [File 10] Interface định nghĩa hành vi tính thuế
+        │   ├── TaxCalculator.java      # [File 09] Tiện ích tính thuế TNCN 4 bậc lũy tiến
+        │   └── Taxable.java            # [File 10] Interface định nghĩa hành vi chịu thuế
         ├── repository/
-        │   ├── EmployeeRepository.java # [File 11] Interface tầng lưu trữ (CRUD nhân sự)
-        │   └── InMemoryEmployeeRepository.java # [File 12] Lưu trữ sẵn hơn 15 nhân viên mẫu
+        │   ├── EmployeeRepository.java # [File 11] Interface tầng lưu trữ (CRUD, Backup/Restore)
+        │   └── InMemoryEmployeeRepository.java # [File 12] Bộ nhớ RAM O(1) đồng bộ CSV UTF-8
         ├── service/
-        │   └── PayrollService.java     # [File 13] Dịch vụ tính toán quỹ lương, gom nhóm theo phòng ban
+        │   └── PayrollService.java     # [File 13] Dịch vụ tính toán quỹ lương và Stream API
         ├── ui/
-        │   ├── MainWindow.java         # [File 14] Cửa sổ chính chứa JTabbedPane (Nhân viên & Bảng lương)
+        │   ├── MainWindow.java         # [File 14] Cửa sổ chính 2 Tab (Nhân sự & Bảng lương)
         │   ├── dialogs/
-        │   │   ├── AboutDialog.java    # [File 15] Hộp thoại hiển thị thông tin nhóm 8 & đề tài
-        │   │   └── EmployeeFormDialog.java # [File 16] Hộp thoại Thêm/Sửa dùng CardLayout & JSpinner
+        │   │   ├── AboutDialog.java    # [File 15] Hộp thoại hiển thị thông tin đề tài
+        │   │   └── EmployeeFormDialog.java # [File 16] Form Thêm/Sửa CardLayout, JSpinner & viền đỏ
         │   └── panels/
         │       ├── EmployeeTableModel.java # [File 17] TableModel hiển thị danh sách hồ sơ nhân viên
-        │       ├── PayrollCellRenderer.java # [File 18] Renderer căn lề, định dạng tiền và tô màu bảng
-        │       └── PayrollTableModel.java  # [File 19] TableModel hiển thị chi tiết tiền lương và dòng tổng
+        │       ├── PayrollCellRenderer.java # [File 18] Renderer căn lề, định dạng tiền và tô màu Zebra
+        │       └── PayrollTableModel.java  # [File 19] TableModel chi tiết lương và dòng TỔNG CỘNG
         └── util/
-            ├── ChartHelper.java        # [File 20] Tiện ích tạo BarChart và PieChart bằng JFreeChart
-            ├── ChartWindow.java        # [File 21] Cửa sổ hiển thị biểu đồ (DISPOSE_ON_CLOSE)
-            ├── CurrencyFormatUtil.java # [File 22] Tiện ích định dạng tiền tệ Việt Nam (VNĐ) và ngày tháng
-            ├── EmployeeComparator.java # [File 23] Bộ so sánh Comparator đa tiêu chí (BONUS)
-            └── PayslipExporter.java    # [File 24] Tiện ích xuất phiếu lương ra file HTML/TXT (BONUS)
+            ├── ChartHelper.java        # [File 20] Tiện ích tạo BarChart và PieChart JFreeChart
+            ├── ChartWindow.java        # [File 21] Cửa sổ hiển thị biểu đồ thời gian thực
+            ├── CurrencyFormatUtil.java # [File 22] Tiện ích định dạng tiền tệ VNĐ và ngày tháng
+            ├── EmployeeComparator.java # [File 23] Bộ so sánh Comparator tiếng Việt đa tiêu chí
+            └── PayslipExporter.java    # [File 24] Tiện ích xuất phiếu cá nhân & báo cáo HTML/CSV
 ```
 
 ---
@@ -216,8 +217,12 @@ OOP_Nhom08_HRPayrollSystem/
 > ```
 
 > [!IMPORTANT]
-> **4. Phản hồi mượt mà trên Event Dispatch Thread (EDT):**  
-> Tuyệt đối không chạy tác vụ ghi file lớn hoặc `Thread.sleep()` trực tiếp bên trong `actionPerformed()` nhằm tránh làm "đơ" giao diện người dùng. Sử dụng `SwingWorker` hoặc luồng phụ trợ khi cần xử lý tệp tin.
+> **4. Cơ chế lưu trữ 2 cấp (Dual-Level Storage) & An toàn dữ liệu:**  
+> Mọi thao tác Thêm, Sửa, Xóa được thực hiện tức thì trên bộ nhớ RAM (`LinkedHashMap`) với tốc độ $O(1)$ và bật cờ `hasUnsavedChanges = true` (hiển thị trạng thái `[Chưa lưu *]`). Dữ liệu chỉ được ghi đè xuống tệp đĩa cứng `data/employees.csv` khi người dùng bấm **Lưu** (menu `File -> Lưu` hoặc phím tắt `Ctrl+S`). Khi thoát ứng dụng, hệ thống tự động kiểm tra cờ này để hỏi xác nhận lưu, phòng ngừa mất mát dữ liệu do sơ ý.
+
+> [!TIP]
+> **5. Thẻ danh mục phòng ban `#DEPT` độc lập:**  
+> Hệ thống duy trì các phòng ban được tạo mới bằng thẻ `#DEPT,Tên phòng ban` trong tệp CSV ngay cả khi phòng ban đó chưa có nhân viên nào, giúp doanh nghiệp thiết lập cơ cấu tổ chức trước khi tuyển dụng mà không bị mất dữ liệu khi khởi động lại ứng dụng.
 
 ---
 
@@ -237,7 +242,7 @@ OOP_Nhom08_HRPayrollSystem/
 | **10**| N24DCAT036 | Trần Minh Huy | Tính năng BONUS & Sắp xếp đa tiêu chí | `PayslipExporter.java`,<br> `EmployeeComparator.java` |
 
 ---
-<!--
+
 ## 8. Bảng kiểm thử mẫu (Test Cases)
 
 Đáp ứng đầy đủ yêu cầu kiểm thử dữ liệu biên và dữ liệu lỗi theo quy định Báo cáo kỹ thuật:
@@ -254,6 +259,3 @@ OOP_Nhom08_HRPayrollSystem/
 | **TC08** | Lọc theo phòng ban | Chọn JComboBox "IT" | JTable chỉ hiển thị các nhân viên thuộc phòng IT | Đạt | Pass |
 | **TC09** | Xóa nhân viên đã chọn | Chọn 1 dòng và bấm nút Xóa | Hộp thoại xác nhận, xóa thành công, quỹ lương giảm | Đạt | Pass |
 | **TC10** | Xuất phiếu lương BONUS | Chọn nhân viên bất kỳ và bấm Xuất | Sinh file `payslip_NVxxx.html` định dạng chuẩn | Đạt | Pass |
-
----
--->

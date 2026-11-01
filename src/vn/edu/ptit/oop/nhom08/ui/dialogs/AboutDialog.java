@@ -1,10 +1,13 @@
 package vn.edu.ptit.oop.nhom08.ui.dialogs;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.URL;
@@ -17,13 +20,11 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.SwingConstants;
 
-// Hộp thoại hiển thị thông tin giới thiệu đề tài và danh sách thành viên Nhóm 08
+// Hộp thoại hiển thị thông tin ứng dụng tinh gọn, trực quan
 public class AboutDialog extends JDialog {
 
     public AboutDialog() {
@@ -31,117 +32,101 @@ public class AboutDialog extends JDialog {
     }
 
     public AboutDialog(Frame parent) {
-        super(parent, "Thông tin ứng dụng - Nhóm 08", true);
+        super(parent, "Thông tin ứng dụng", true);
         initUI();
     }
 
     private void initUI() {
-        setSize(580, 420);
+        setSize(480, 310);
         setLocationRelativeTo(getParent());
         setLayout(new BorderLayout());
         setResizable(false);
 
-        add(createHeaderPanel(), BorderLayout.NORTH);
-        add(createCenterPanel(), BorderLayout.CENTER);
-        add(createBottomPanel(), BorderLayout.SOUTH);
+        loadWindowIcon();
 
-        // Hỗ trợ phím ESC để đóng hộp thoại
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 24, 15, 24));
+
+        // 1. Phần tiêu đề chính giữa
+        JLabel lblTitle = new JLabel("HR Payroll System", SwingConstants.CENTER);
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        lblTitle.setAlignmentX(CENTER_ALIGNMENT);
+
+        JLabel lblSubtitle = new JLabel("Hệ thống Quản lý Nhân sự & Bảng lương", SwingConstants.CENTER);
+        lblSubtitle.setFont(new Font("Segoe UI", Font.ITALIC, 13));
+        lblSubtitle.setAlignmentX(CENTER_ALIGNMENT);
+
+        contentPanel.add(lblTitle);
+        contentPanel.add(Box.createVerticalStrut(4));
+        contentPanel.add(lblSubtitle);
+        contentPanel.add(Box.createVerticalStrut(14));
+
+        // 2. Đường kẻ phân cách mỏng
+        JSeparator separator = new JSeparator();
+        separator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 2));
+        contentPanel.add(separator);
+        contentPanel.add(Box.createVerticalStrut(14));
+
+        // 3. Bảng thông tin dạng Key - Value
+        JPanel infoPanel = new JPanel(new GridBagLayout());
+        infoPanel.setAlignmentX(CENTER_ALIGNMENT);
+
+        addInfoRow(infoPanel, 0, "Môn học:", "Lập trình hướng đối tượng (INT1332)");
+        addInfoRow(infoPanel, 1, "Đề tài:", "Đề tài số 02 - Quản lý Nhân sự & Bảng lương");
+        addInfoRow(infoPanel, 2, "Thực hiện:", "Nhóm 08 - PTIT");
+        addInfoRow(infoPanel, 3, "Công nghệ:", "Java Swing, JFreeChart 1.5, FlatLaf");
+        addInfoRow(infoPanel, 4, "Phiên bản:", "1.1.0 (2026)");
+
+        contentPanel.add(infoPanel);
+
+        // 4. Nút Đóng
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 8));
+        JButton btnClose = new JButton("Đóng");
+        btnClose.setPreferredSize(new Dimension(85, 28));
+        btnClose.addActionListener(e -> dispose());
+        getRootPane().setDefaultButton(btnClose);
+        bottomPanel.add(btnClose);
+
+        add(contentPanel, BorderLayout.CENTER);
+        add(bottomPanel, BorderLayout.SOUTH);
+
+        // Hỗ trợ bấm phím ESC để đóng hộp thoại
         getRootPane().registerKeyboardAction(e -> dispose(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_IN_FOCUSED_WINDOW);
     }
 
-    // Tiêu đề, logo và thông tin môn học
-    private JPanel createHeaderPanel() {
-        JPanel headerPanel = new JPanel(new BorderLayout(15, 0));
-        headerPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 10, 15));
+    private void addInfoRow(JPanel panel, int row, String label, String value) {
+        GridBagConstraints lc = new GridBagConstraints();
+        lc.gridx = 0;
+        lc.gridy = row;
+        lc.anchor = GridBagConstraints.WEST;
+        lc.insets = new Insets(3, 10, 3, 15);
 
+        JLabel lblKey = new JLabel(label);
+        lblKey.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        panel.add(lblKey, lc);
+
+        GridBagConstraints vc = new GridBagConstraints();
+        vc.gridx = 1;
+        vc.gridy = row;
+        vc.anchor = GridBagConstraints.WEST;
+        vc.weightx = 1.0;
+        vc.insets = new Insets(3, 0, 3, 10);
+
+        JLabel lblVal = new JLabel(value);
+        lblVal.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        panel.add(lblVal, vc);
+    }
+
+    private void loadWindowIcon() {
         ImageIcon icon = loadIcon("/resources/icons/app.png");
         if (icon != null) {
-            headerPanel.add(new JLabel(icon), BorderLayout.WEST);
+            setIconImage(icon.getImage());
         }
-
-        JPanel titlePanel = new JPanel();
-        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
-
-        JLabel titleLabel = new JLabel("HỆ THỐNG QUẢN LÝ NHÂN SỰ & BẢNG LƯƠNG");
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 15));
-
-        JLabel subLabel = new JLabel("Bài tập lớn Lập trình hướng đối tượng (INT1332) - PTIT");
-        subLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        subLabel.setForeground(Color.GRAY);
-
-        JLabel infoLabel = new JLabel("Chủ đề số 02 • Nhóm 08 • Java SE 17 • FlatLaf • JFreeChart");
-        infoLabel.setFont(new Font("Segoe UI", Font.ITALIC, 11));
-
-        titlePanel.add(titleLabel);
-        titlePanel.add(Box.createVerticalStrut(3));
-        titlePanel.add(subLabel);
-        titlePanel.add(Box.createVerticalStrut(3));
-        titlePanel.add(infoLabel);
-
-        headerPanel.add(titlePanel, BorderLayout.CENTER);
-        return headerPanel;
     }
 
-    // Bảng danh sách 10 thành viên và vai trò
-    private JPanel createCenterPanel() {
-        JPanel centerPanel = new JPanel(new BorderLayout());
-        centerPanel.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
-
-        String[] columns = {"STT", "MSSV", "Họ và tên", "Nhiệm vụ chính"};
-        Object[][] data = {
-            {"1", "N24DCAT040", "Nguyễn Quốc Khánh", "Trưởng nhóm, Git & Khung sườn chính"},
-            {"2", "N24DCAT063", "Trần Vinh Quang", "Lớp cha Employee & Ngoại lệ hệ thống"},
-            {"3", "N24DCAT059", "Nguyễn Vũ Hoàng Phúc", "Hợp đồng FullTime, PartTime & Intern"},
-            {"4", "N24DCAT024", "Phan Trọng Hạnh", "Lớp Manager & Nghiệp vụ tính thuế TNCN"},
-            {"5", "N24DCAT019", "Hoàng Bá Duy", "Tầng Repository & Dịch vụ PayrollService"},
-            {"6", "N24DCAT035", "Ngô Tiến Huy", "Tiện ích Format & Bảng dữ liệu nhân sự"},
-            {"7", "N24DCAT041", "Bùi Hải Khôi", "Bảng lương & Tùy biến PayrollCellRenderer"},
-            {"8", "N24DCAT061", "Nguyễn Ngọc Quân", "Hộp thoại Form nhập liệu EmployeeFormDialog"},
-            {"9", "N24DCAT039", "Nguyễn Nam Khánh", "Biểu đồ thống kê JFreeChart & ChartWindow"},
-            {"10", "N24DCAT036", "Trần Minh Huy", "Tính năng BONUS: Xuất phiếu lương & Sắp xếp"}
-        };
-
-        DefaultTableModel model = new DefaultTableModel(data, columns) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        JTable table = new JTable(model);
-        table.setRowHeight(22);
-        table.setShowGrid(true);
-        table.setFillsViewportHeight(true);
-
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-
-        table.getColumnModel().getColumn(0).setPreferredWidth(35);
-        table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-
-        table.getColumnModel().getColumn(1).setPreferredWidth(95);
-        table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-
-        table.getColumnModel().getColumn(2).setPreferredWidth(150);
-        table.getColumnModel().getColumn(3).setPreferredWidth(240);
-
-        centerPanel.add(new JScrollPane(table), BorderLayout.CENTER);
-        return centerPanel;
-    }
-
-    // Nút đóng hộp thoại
-    private JPanel createBottomPanel() {
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 10));
-        JButton closeButton = new JButton("Đóng");
-        closeButton.addActionListener(e -> dispose());
-        getRootPane().setDefaultButton(closeButton);
-        bottomPanel.add(closeButton);
-        return bottomPanel;
-    }
-
-    // Nạp icon an toàn từ resources hoặc đường dẫn tương đối
     private static ImageIcon loadIcon(String path) {
         URL url = AboutDialog.class.getResource(path);
         if (url != null) {
